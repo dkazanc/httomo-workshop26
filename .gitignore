@@ -1,0 +1,20 @@
+# Quarto working files
+/.quarto/
+
+# Rendered website/presentation
+/_site/
+/index.html
+/index_files/
+
+# Jupyter checkpoints
+/.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Editor and operating-system files
+.vscode/
+.DS_Store
+
+**/*.quarto_ipynb

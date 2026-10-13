@@ -1,0 +1,12 @@
+Generated using the built-in image generation tool.
+Create a scientifically accurate educational supporting figure for a beginner tomography Quarto Reveal.js slide. Wide 16:9 landscape, uniform dark charcoal #191919 background, high-contrast white sans-serif typography, restrained teal and warm gold accents, spacious minimal layout.
+
+Main visual in upper two thirds: a single straight horizontal X-ray beam entering a rectangular cross-section of a heterogeneous sample from left and exiting right toward a simple vertical detector. Incoming ray bright gold labelled "Incident intensity I₀"; outgoing ray dimmer gold labelled "Transmitted intensity I". Both rays follow precisely the SAME straight line through the object (no bending). The sample cross section has three subtle areas with different grey densities, and the ray path through it is a thin bright teal line labelled "Ray path L". Label sample above "Local attenuation μ(s)". Label detector "Detector". Clearly distinguish intensity reduction from ray deflection. No photoreal hardware, no CT ring, no 3D scanner.
+
+Lower third: three large legible mathematical stages arranged horizontally with simple teal arrows between them:
+"Transmission" above "T = I / I₀"
+then "Negative logarithm" above "p = −ln(T)"
+then "Line integral" above "p = ∫_L μ(s) ds".
+Render the integral as proper mathematical notation with L as the subscript on the integral, μ Greek mu, s the distance along the ray. Beneath all three, one centered sentence: "Each corrected projection pixel measures attenuation accumulated along one ray."
+Small unobtrusive bottom footer: "Ideal Beer–Lambert model: monochromatic X-rays, negligible scatter."
+All text must be accurate and clearly readable, no additional text. The figure explains corrected transmission; do not imply raw detector values with offsets can be directly logged. Elegant flat scientific schematic, no charts with invented data, no decorative panels, no logos.

@@ -1,0 +1,84 @@
+- method: standard_tomo
+  module_path: httomo.data.hdf.loaders
+  parameters:
+    data_path: /exchange/data
+    image_key_path: null
+    rotation_angles:
+      user_defined:
+        start_angle: 0
+        stop_angle: 179.876
+        angles_total: 1500
+    preview:
+      detector_y:
+        start: 500
+        stop: 510
+    darks:
+      file: input_data
+      image_key_path: null
+      data_path: /exchange/data_dark
+    flats:
+      file: input_data
+      image_key_path: null
+      data_path: /exchange/data_white
+    continuous_scan_subset: null
+- method: dark_flat_field_correction
+  module_path: httomolibgpu.prep.normalize
+  parameters:
+    flats_multiplier: 1.0
+    darks_multiplier: 1.0
+    upper_bound: null
+    lower_bound: null
+- method: find_center_vo
+  module_path: httomolibgpu.recon.rotation
+  parameters:
+    ind: mid
+    average_radius: 0
+    cor_initialisation_value: null
+    smin: -50
+    smax: 50
+    srad: 6.0
+    step: 0.5
+    ratio: 0.5
+    drop: 20
+  id: centering
+  side_outputs:
+    cor: centre_of_rotation
+- method: remove_all_stripe
+  module_path: httomolibgpu.prep.stripe
+  parameters:
+    snr: 3.0
+    la_size: 61
+    sm_size: 21
+    dim: 1
+    normalize: false
+- method: minus_log
+  module_path: httomolibgpu.prep.normalize
+  parameters: {}
+- method: FBP3d_tomobar
+  module_path: httomolibgpu.recon.algorithm
+  parameters:
+    center: ${{centering.side_outputs.centre_of_rotation}}
+    detector_pad: false
+    filter_freq_cutoff: 0.35
+    recon_size: null
+    recon_mask_radius: 0.95
+- method: calculate_stats
+  module_path: httomo.methods
+  parameters: {}
+  id: statistics
+  side_outputs:
+    glob_stats: glob_stats
+- method: rescale_to_int
+  module_path: httomolib.misc.rescale
+  parameters:
+    perc_range_min: 1.0
+    perc_range_max: 99.0
+    bits: 16
+    glob_stats: ${{statistics.side_outputs.glob_stats}}
+- method: save_to_images
+  module_path: httomolib.misc.images
+  parameters:
+    subfolder_name: images
+    axis: auto
+    file_format: tif
+    asynchronous: true

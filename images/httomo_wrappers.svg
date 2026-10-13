@@ -1,0 +1,1055 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1920"
+   height="1080"
+   viewBox="0 0 1920 1080"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg281"
+   sodipodi:docname="httomo_wrappers.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview283"
+     pagecolor="#ffffff"
+     bordercolor="#cccccc"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.68229167"
+     inkscape:cx="960"
+     inkscape:cy="541.55725"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg281" />
+  <title
+     id="title">HTTomo wrappers</title>
+  <desc
+     id="desc">Wrappers invoke exposed library methods and use supporting information from HTTomo-backends. Five main wrapper types are shown with their inputs and outputs: generic, normalisation, centering, reconstruction and image saver.</desc>
+  <defs
+     id="defs7">
+    <marker
+       id="arrow"
+       viewBox="0 0 10 10"
+       refX="9"
+       refY="5"
+       markerWidth="7"
+       markerHeight="7"
+       orient="auto">
+      <path
+         d="M0 0L10 5L0 10Z"
+         fill="#55D1DB"
+         id="path4" />
+    </marker>
+  </defs>
+  <text
+     x="70"
+     y="92"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="52"
+     fill="#F1F5FA"
+     font-weight="700"
+     text-anchor="start"
+     id="text11">HTTomo wrappers</text>
+  <text
+     x="72"
+     y="145"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="27"
+     fill="#BBC9D7"
+     font-weight="400"
+     text-anchor="start"
+     id="text13">Connecting library methods to the inputs and outputs required by a pipeline.</text>
+  <rect
+     x="70"
+     y="193"
+     width="855"
+     height="172"
+     rx="16"
+     fill="#122130"
+     stroke="#344A5F"
+     stroke-width="2"
+     id="rect15" />
+  <rect
+     x="995"
+     y="193"
+     width="855"
+     height="172"
+     rx="16"
+     fill="#122130"
+     stroke="#344A5F"
+     stroke-width="2"
+     id="rect17" />
+  <text
+     x="102"
+     y="237"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="24"
+     fill="#B2A6EB"
+     font-weight="700"
+     text-anchor="start"
+     id="text19">LIBRARIES WITH EXPOSED METHODS</text>
+  <a
+     href="https://github.com/tomopy/tomopy"
+     target="_blank"
+     rel="noopener noreferrer"
+     style="cursor:pointer"
+     id="a27">
+    <title
+       id="title21">Open TomoPy on GitHub</title>
+    <rect
+       x="103"
+       y="269"
+       width="205"
+       height="60"
+       rx="9"
+       fill="#1C2A3D"
+       stroke="#56638C"
+       stroke-width="2"
+       id="rect23" />
+    <text
+       x="205.5"
+       y="308"
+       font-family="Arial, Helvetica, sans-serif"
+       font-size="27"
+       fill="#F1F5FA"
+       font-weight="700"
+       text-anchor="middle"
+       id="text25">TomoPy</text>
+  </a>
+  <a
+     href="https://github.com/DiamondLightSource/httomolib"
+     target="_blank"
+     rel="noopener noreferrer"
+     style="cursor:pointer"
+     id="a35">
+    <title
+       id="title29">Open HTTomoLib on GitHub</title>
+    <rect
+       x="328"
+       y="269"
+       width="248"
+       height="60"
+       rx="9"
+       fill="#1C2A3D"
+       stroke="#56638C"
+       stroke-width="2"
+       id="rect31" />
+    <text
+       x="452.0"
+       y="308"
+       font-family="Arial, Helvetica, sans-serif"
+       font-size="27"
+       fill="#F1F5FA"
+       font-weight="700"
+       text-anchor="middle"
+       id="text33">HTTomoLib</text>
+  </a>
+  <a
+     href="https://github.com/DiamondLightSource/httomolibgpu"
+     target="_blank"
+     rel="noopener noreferrer"
+     style="cursor:pointer"
+     id="a43">
+    <title
+       id="title37">Open HTTomoLibGPU on GitHub</title>
+    <rect
+       x="596"
+       y="269"
+       width="296"
+       height="60"
+       rx="9"
+       fill="#1C2A3D"
+       stroke="#56638C"
+       stroke-width="2"
+       id="rect39" />
+    <text
+       x="744.0"
+       y="308"
+       font-family="Arial, Helvetica, sans-serif"
+       font-size="27"
+       fill="#F1F5FA"
+       font-weight="700"
+       text-anchor="middle"
+       id="text41">HTTomoLibGPU</text>
+  </a>
+  <text
+     x="1027"
+     y="237"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="24"
+     fill="#70D7B5"
+     font-weight="700"
+     text-anchor="start"
+     id="text45">SUPPORTING INFORMATION</text>
+  <a
+     href="https://github.com/DiamondLightSource/httomo-backends"
+     target="_blank"
+     rel="noopener noreferrer"
+     style="cursor:pointer"
+     id="a51">
+    <title
+       id="title47">Open HTTomo-backends on GitHub</title>
+    <text
+       x="1027"
+       y="305"
+       font-family="Arial, Helvetica, sans-serif"
+       font-size="33"
+       fill="#F1F5FA"
+       font-weight="700"
+       text-anchor="start"
+       id="text49">HTTomo-backends</text>
+  </a>
+  <path
+     d="M490 438V377"
+     fill="none"
+     stroke="#55D1DB"
+     stroke-width="2.5"
+     marker-end="url(#arrow)"
+     id="path53" />
+  <text
+     x="516"
+     y="405"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="22"
+     fill="#BBC9D7"
+     font-weight="400"
+     text-anchor="start"
+     id="text55">Invoke methods</text>
+  <path
+     d="M1430 377V438"
+     fill="none"
+     stroke="#55D1DB"
+     stroke-width="2.5"
+     marker-end="url(#arrow)"
+     id="path57" />
+  <text
+     x="1456"
+     y="405"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="22"
+     fill="#BBC9D7"
+     font-weight="400"
+     text-anchor="start"
+     id="text59">Supply supporting information</text>
+  <rect
+     x="70"
+     y="451"
+     width="1780"
+     height="115"
+     rx="16"
+     fill="#123039"
+     stroke="#55D1DB"
+     stroke-width="2"
+     id="rect61" />
+  <text
+     x="105"
+     y="498"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="32"
+     fill="#F1F5FA"
+     font-weight="700"
+     text-anchor="start"
+     id="text63">HTTomo wrapper layer</text>
+  <text
+     x="105"
+     y="539"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="24"
+     fill="#BBC9D7"
+     font-weight="400"
+     text-anchor="start"
+     id="text65">Handles method-specific inputs and outputs</text>
+  <text
+     x="1809"
+     y="515"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="25"
+     fill="#55D1DB"
+     font-weight="700"
+     text-anchor="end"
+     id="text67">Five main wrapper types</text>
+  <path
+     d="M960 567V601M239 624V601H1681V624M599 601V624M959 601V624M1319 601V624"
+     fill="none"
+     stroke="#526B80"
+     stroke-width="2"
+     id="path69" />
+  <rect
+     x="70"
+     y="625"
+     width="340"
+     height="391"
+     rx="16"
+     fill="#122130"
+     stroke="#344A5F"
+     stroke-width="2"
+     id="rect71" />
+  <path
+     d="M86 626H394"
+     stroke="#AFA3EA"
+     stroke-width="5"
+     id="path73" />
+  <text
+     x="94"
+     y="674"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="27"
+     fill="#AFA3EA"
+     font-weight="700"
+     text-anchor="start"
+     id="text75">Generic</text>
+  <g
+     transform="translate(160,690)"
+     stroke="#AFA3EA"
+     stroke-width="2.5"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="g119">
+    <rect
+       x="0"
+       y="12"
+       width="53"
+       height="66"
+       rx="4"
+       fill="#243449"
+       id="rect77" />
+    <rect
+       x="108"
+       y="12"
+       width="53"
+       height="66"
+       rx="4"
+       fill="#243449"
+       id="rect79" />
+    <rect
+       x="8"
+       y="25"
+       width="8"
+       height="8"
+       fill="#AFA3EA"
+       stroke="none"
+       id="rect81" />
+    <circle
+       cx="120"
+       cy="29"
+       r="4"
+       fill="#AFA3EA"
+       stroke="none"
+       id="circle83" />
+    <rect
+       x="8"
+       y="42"
+       width="8"
+       height="8"
+       fill="#AFA3EA"
+       stroke="none"
+       id="rect85" />
+    <circle
+       cx="120"
+       cy="46"
+       r="4"
+       fill="#AFA3EA"
+       stroke="none"
+       id="circle87" />
+    <rect
+       x="8"
+       y="59"
+       width="8"
+       height="8"
+       fill="#AFA3EA"
+       stroke="none"
+       id="rect89" />
+    <circle
+       cx="120"
+       cy="63"
+       r="4"
+       fill="#AFA3EA"
+       stroke="none"
+       id="circle91" />
+    <rect
+       x="23"
+       y="25"
+       width="8"
+       height="8"
+       fill="#AFA3EA"
+       stroke="none"
+       id="rect93" />
+    <circle
+       cx="135"
+       cy="29"
+       r="4"
+       fill="#AFA3EA"
+       stroke="none"
+       id="circle95" />
+    <rect
+       x="23"
+       y="42"
+       width="8"
+       height="8"
+       fill="#AFA3EA"
+       stroke="none"
+       id="rect97" />
+    <circle
+       cx="135"
+       cy="46"
+       r="4"
+       fill="#AFA3EA"
+       stroke="none"
+       id="circle99" />
+    <rect
+       x="23"
+       y="59"
+       width="8"
+       height="8"
+       fill="#AFA3EA"
+       stroke="none"
+       id="rect101" />
+    <circle
+       cx="135"
+       cy="63"
+       r="4"
+       fill="#AFA3EA"
+       stroke="none"
+       id="circle103" />
+    <rect
+       x="38"
+       y="25"
+       width="8"
+       height="8"
+       fill="#AFA3EA"
+       stroke="none"
+       id="rect105" />
+    <circle
+       cx="150"
+       cy="29"
+       r="4"
+       fill="#AFA3EA"
+       stroke="none"
+       id="circle107" />
+    <rect
+       x="38"
+       y="42"
+       width="8"
+       height="8"
+       fill="#AFA3EA"
+       stroke="none"
+       id="rect109" />
+    <circle
+       cx="150"
+       cy="46"
+       r="4"
+       fill="#AFA3EA"
+       stroke="none"
+       id="circle111" />
+    <rect
+       x="38"
+       y="59"
+       width="8"
+       height="8"
+       fill="#AFA3EA"
+       stroke="none"
+       id="rect113" />
+    <circle
+       cx="150"
+       cy="63"
+       r="4"
+       fill="#AFA3EA"
+       stroke="none"
+       id="circle115" />
+    <path
+       d="M64 45H97M88 36L98 45L88 54"
+       fill="none"
+       id="path117" />
+  </g>
+  <text
+     x="94"
+     y="813"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="18"
+     fill="#93A9BA"
+     font-weight="700"
+     text-anchor="start"
+     id="text121">INPUT</text>
+  <text
+     x="94"
+     y="844"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="23"
+     fill="#F1F5FA"
+     font-weight="400"
+     text-anchor="start"
+     id="text123">Data</text>
+  <path
+     d="M355 828V896"
+     fill="none"
+     stroke="#55D1DB"
+     stroke-width="2.5"
+     marker-end="url(#arrow)"
+     id="path125" />
+  <text
+     x="94"
+     y="910"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="18"
+     fill="#93A9BA"
+     font-weight="700"
+     text-anchor="start"
+     id="text127">OUTPUT</text>
+  <text
+     x="94"
+     y="941"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="23"
+     fill="#F1F5FA"
+     font-weight="400"
+     text-anchor="start"
+     id="text129">Processed data</text>
+  <rect
+     x="430"
+     y="625"
+     width="340"
+     height="391"
+     rx="16"
+     fill="#122130"
+     stroke="#344A5F"
+     stroke-width="2"
+     id="rect131" />
+  <path
+     d="M446 626H754"
+     stroke="#55D1DB"
+     stroke-width="5"
+     id="path133" />
+  <text
+     x="454"
+     y="674"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="27"
+     fill="#55D1DB"
+     font-weight="700"
+     text-anchor="start"
+     id="text135">Normalisation</text>
+  <g
+     transform="translate(520,690)"
+     stroke="#55D1DB"
+     stroke-width="2.5"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="g165">
+    <rect
+       x="0"
+       y="20"
+       width="53"
+       height="64"
+       rx="3"
+       fill="#162A32"
+       id="rect137" />
+    <polyline
+       points="26.50,26.00 28.03,26.65 29.55,27.30 31.05,27.95 32.53,28.60 33.96,29.25 35.35,29.90 36.69,30.55 37.96,31.20 39.16,31.85 40.29,32.50 41.33,33.15 42.28,33.80 43.13,34.45 43.87,35.10 44.52,35.75 45.05,36.40 45.46,37.05 45.76,37.70 45.94,38.35 46.00,39.00 45.94,39.65 45.76,40.30 45.46,40.95 45.05,41.60 44.52,42.25 43.87,42.90 43.13,43.55 42.28,44.20 41.33,44.85 40.29,45.50 39.16,46.15 37.96,46.80 36.69,47.45 35.35,48.10 33.96,48.75 32.53,49.40 31.05,50.05 29.55,50.70 28.03,51.35 26.50,52.00 24.97,52.65 23.45,53.30 21.95,53.95 20.47,54.60 19.04,55.25 17.65,55.90 16.31,56.55 15.04,57.20 13.84,57.85 12.71,58.50 11.67,59.15 10.72,59.80 9.87,60.45 9.13,61.10 8.48,61.75 7.95,62.40 7.54,63.05 7.24,63.70 7.06,64.35 7.00,65.00 7.06,65.65 7.24,66.30 7.54,66.95 7.95,67.60 8.48,68.25 9.13,68.90 9.87,69.55 10.72,70.20 11.67,70.85 12.71,71.50 13.84,72.15 15.04,72.80 16.31,73.45 17.65,74.10 19.04,74.75 20.47,75.40 21.95,76.05 23.45,76.70 24.97,77.35 26.50,78.00"
+       fill="none"
+       stroke-width="1.6"
+       id="polyline139" />
+    <polyline
+       points="43.33,26.00 42.51,26.65 41.59,27.30 40.57,27.95 39.47,28.60 38.28,29.25 37.03,29.90 35.71,30.55 34.33,31.20 32.91,31.85 31.44,32.50 29.95,33.15 28.43,33.80 26.90,34.45 25.37,35.10 23.85,35.75 22.34,36.40 20.86,37.05 19.41,37.70 18.01,38.35 16.66,39.00 15.37,39.65 14.14,40.30 13.00,40.95 11.94,41.60 10.96,42.25 10.09,42.90 9.31,43.55 8.64,44.20 8.08,44.85 7.64,45.50 7.31,46.15 7.10,46.80 7.00,47.45 7.03,48.10 7.18,48.75 7.45,49.40 7.83,50.05 8.33,50.70 8.95,51.35 9.67,52.00 10.49,52.65 11.41,53.30 12.43,53.95 13.53,54.60 14.72,55.25 15.97,55.90 17.29,56.55 18.67,57.20 20.09,57.85 21.56,58.50 23.05,59.15 24.57,59.80 26.10,60.45 27.63,61.10 29.15,61.75 30.66,62.40 32.14,63.05 33.59,63.70 34.99,64.35 36.34,65.00 37.63,65.65 38.86,66.30 40.00,66.95 41.06,67.60 42.04,68.25 42.91,68.90 43.69,69.55 44.36,70.20 44.92,70.85 45.36,71.50 45.69,72.15 45.90,72.80 46.00,73.45 45.97,74.10 45.82,74.75 45.55,75.40 45.17,76.05 44.67,76.70 44.05,77.35 43.33,78.00"
+       fill="none"
+       stroke-width="1.6"
+       id="polyline141" />
+    <polyline
+       points="9.50,26.00 8.81,26.65 8.22,27.30 7.74,27.95 7.38,28.60 7.14,29.25 7.02,29.90 7.01,30.55 7.13,31.20 7.37,31.85 7.72,32.50 8.19,33.15 8.78,33.80 9.47,34.45 10.27,35.10 11.16,35.75 12.16,36.40 13.24,37.05 14.40,37.70 15.64,38.35 16.94,39.00 18.30,39.65 19.72,40.30 21.17,40.95 22.66,41.60 24.17,42.25 25.70,42.90 27.23,43.55 28.76,44.20 30.27,44.85 31.76,45.50 33.21,46.15 34.63,46.80 36.00,47.45 37.30,48.10 38.54,48.75 39.71,49.40 40.79,50.05 41.79,50.70 42.69,51.35 43.50,52.00 44.19,52.65 44.78,53.30 45.26,53.95 45.62,54.60 45.86,55.25 45.98,55.90 45.99,56.55 45.87,57.20 45.63,57.85 45.28,58.50 44.81,59.15 44.22,59.80 43.53,60.45 42.73,61.10 41.84,61.75 40.84,62.40 39.76,63.05 38.60,63.70 37.36,64.35 36.06,65.00 34.70,65.65 33.28,66.30 31.83,66.95 30.34,67.60 28.83,68.25 27.30,68.90 25.77,69.55 24.24,70.20 22.73,70.85 21.24,71.50 19.79,72.15 18.37,72.80 17.00,73.45 15.70,74.10 14.46,74.75 13.29,75.40 12.21,76.05 11.21,76.70 10.31,77.35 9.50,78.00"
+       fill="none"
+       stroke-width="1.6"
+       id="polyline143" />
+    <rect
+       x="112"
+       y="20"
+       width="53"
+       height="64"
+       rx="3"
+       fill="#162A32"
+       id="rect145" />
+    <polyline
+       points="138.50,26.00 140.03,26.65 141.55,27.30 143.05,27.95 144.53,28.60 145.96,29.25 147.35,29.90 148.69,30.55 149.96,31.20 151.16,31.85 152.29,32.50 153.33,33.15 154.28,33.80 155.13,34.45 155.87,35.10 156.52,35.75 157.05,36.40 157.46,37.05 157.76,37.70 157.94,38.35 158.00,39.00 157.94,39.65 157.76,40.30 157.46,40.95 157.05,41.60 156.52,42.25 155.87,42.90 155.13,43.55 154.28,44.20 153.33,44.85 152.29,45.50 151.16,46.15 149.96,46.80 148.69,47.45 147.35,48.10 145.96,48.75 144.53,49.40 143.05,50.05 141.55,50.70 140.03,51.35 138.50,52.00 136.97,52.65 135.45,53.30 133.95,53.95 132.47,54.60 131.04,55.25 129.65,55.90 128.31,56.55 127.04,57.20 125.84,57.85 124.71,58.50 123.67,59.15 122.72,59.80 121.87,60.45 121.13,61.10 120.48,61.75 119.95,62.40 119.54,63.05 119.24,63.70 119.06,64.35 119.00,65.00 119.06,65.65 119.24,66.30 119.54,66.95 119.95,67.60 120.48,68.25 121.13,68.90 121.87,69.55 122.72,70.20 123.67,70.85 124.71,71.50 125.84,72.15 127.04,72.80 128.31,73.45 129.65,74.10 131.04,74.75 132.47,75.40 133.95,76.05 135.45,76.70 136.97,77.35 138.50,78.00"
+       fill="none"
+       stroke-width="1.6"
+       id="polyline147" />
+    <polyline
+       points="155.33,26.00 154.51,26.65 153.59,27.30 152.57,27.95 151.47,28.60 150.28,29.25 149.03,29.90 147.71,30.55 146.33,31.20 144.91,31.85 143.44,32.50 141.95,33.15 140.43,33.80 138.90,34.45 137.37,35.10 135.85,35.75 134.34,36.40 132.86,37.05 131.41,37.70 130.01,38.35 128.66,39.00 127.37,39.65 126.14,40.30 125.00,40.95 123.94,41.60 122.96,42.25 122.09,42.90 121.31,43.55 120.64,44.20 120.08,44.85 119.64,45.50 119.31,46.15 119.10,46.80 119.00,47.45 119.03,48.10 119.18,48.75 119.45,49.40 119.83,50.05 120.33,50.70 120.95,51.35 121.67,52.00 122.49,52.65 123.41,53.30 124.43,53.95 125.53,54.60 126.72,55.25 127.97,55.90 129.29,56.55 130.67,57.20 132.09,57.85 133.56,58.50 135.05,59.15 136.57,59.80 138.10,60.45 139.63,61.10 141.15,61.75 142.66,62.40 144.14,63.05 145.59,63.70 146.99,64.35 148.34,65.00 149.63,65.65 150.86,66.30 152.00,66.95 153.06,67.60 154.04,68.25 154.91,68.90 155.69,69.55 156.36,70.20 156.92,70.85 157.36,71.50 157.69,72.15 157.90,72.80 158.00,73.45 157.97,74.10 157.82,74.75 157.55,75.40 157.17,76.05 156.67,76.70 156.05,77.35 155.33,78.00"
+       fill="none"
+       stroke-width="1.6"
+       id="polyline149" />
+    <polyline
+       points="121.50,26.00 120.81,26.65 120.22,27.30 119.74,27.95 119.38,28.60 119.14,29.25 119.02,29.90 119.01,30.55 119.13,31.20 119.37,31.85 119.72,32.50 120.19,33.15 120.78,33.80 121.47,34.45 122.27,35.10 123.16,35.75 124.16,36.40 125.24,37.05 126.40,37.70 127.64,38.35 128.94,39.00 130.30,39.65 131.72,40.30 133.17,40.95 134.66,41.60 136.17,42.25 137.70,42.90 139.23,43.55 140.76,44.20 142.27,44.85 143.76,45.50 145.21,46.15 146.63,46.80 148.00,47.45 149.30,48.10 150.54,48.75 151.71,49.40 152.79,50.05 153.79,50.70 154.69,51.35 155.50,52.00 156.19,52.65 156.78,53.30 157.26,53.95 157.62,54.60 157.86,55.25 157.98,55.90 157.99,56.55 157.87,57.20 157.63,57.85 157.28,58.50 156.81,59.15 156.22,59.80 155.53,60.45 154.73,61.10 153.84,61.75 152.84,62.40 151.76,63.05 150.60,63.70 149.36,64.35 148.06,65.00 146.70,65.65 145.28,66.30 143.83,66.95 142.34,67.60 140.83,68.25 139.30,68.90 137.77,69.55 136.24,70.20 134.73,70.85 133.24,71.50 131.79,72.15 130.37,72.80 129.00,73.45 127.70,74.10 126.46,74.75 125.29,75.40 124.21,76.05 123.21,76.70 122.31,77.35 121.50,78.00"
+       fill="none"
+       stroke-width="1.6"
+       id="polyline151" />
+    <path
+       d="M61 57H104M96 49L104 57L96 65"
+       fill="none"
+       id="path153" />
+    <rect
+       x="59"
+       y="0"
+       width="19"
+       height="19"
+       rx="2"
+       fill="#E6F2F5"
+       id="rect155" />
+    <rect
+       x="88"
+       y="0"
+       width="19"
+       height="19"
+       rx="2"
+       fill="#17212D"
+       id="rect157" />
+    <path
+       d="M69 23V32H83V48M98 23V32H83M77 42L83 48L89 42"
+       fill="none"
+       stroke-width="1.7"
+       id="path159" />
+    <text
+       x="68.5"
+       y="14"
+       font-family="Arial"
+       font-size="12"
+       text-anchor="middle"
+       fill="#233B4A"
+       stroke="none"
+       id="text161">F</text>
+    <text
+       x="97.5"
+       y="14"
+       font-family="Arial"
+       font-size="12"
+       text-anchor="middle"
+       fill="#E6F2F5"
+       stroke="none"
+       id="text163">D</text>
+  </g>
+  <text
+     x="454"
+     y="813"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="18"
+     fill="#93A9BA"
+     font-weight="700"
+     text-anchor="start"
+     id="text167">INPUT</text>
+  <text
+     x="454"
+     y="844"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="23"
+     fill="#F1F5FA"
+     font-weight="400"
+     text-anchor="start"
+     id="text169">Data, flats, darks</text>
+  <path
+     d="M715 828V896"
+     fill="none"
+     stroke="#55D1DB"
+     stroke-width="2.5"
+     marker-end="url(#arrow)"
+     id="path171" />
+  <text
+     x="454"
+     y="910"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="18"
+     fill="#93A9BA"
+     font-weight="700"
+     text-anchor="start"
+     id="text173">OUTPUT</text>
+  <text
+     x="454"
+     y="941"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="23"
+     fill="#F1F5FA"
+     font-weight="400"
+     text-anchor="start"
+     id="text175">Normalised data</text>
+  <rect
+     x="790"
+     y="625"
+     width="340"
+     height="391"
+     rx="16"
+     fill="#122130"
+     stroke="#344A5F"
+     stroke-width="2"
+     id="rect177" />
+  <path
+     d="M806 626H1114"
+     stroke="#F0B870"
+     stroke-width="5"
+     id="path179" />
+  <text
+     x="814"
+     y="674"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="27"
+     fill="#F0B870"
+     font-weight="700"
+     text-anchor="start"
+     id="text181">Centering</text>
+  <g
+     transform="translate(880,690)"
+     stroke="#F0B870"
+     stroke-width="2.5"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="g195">
+    <ellipse
+       cx="80"
+       cy="47"
+       rx="50"
+       ry="32"
+       fill="#35404B"
+       id="ellipse183" />
+    <ellipse
+       cx="80"
+       cy="47"
+       rx="25"
+       ry="32"
+       fill="none"
+       id="ellipse185" />
+    <path
+       d="M80 0V93"
+       stroke-dasharray="5 5"
+       id="path187" />
+    <path
+       d="M14 47H146"
+       id="path189" />
+    <circle
+       cx="80"
+       cy="47"
+       r="7"
+       fill="#F0B870"
+       id="circle191" />
+    <path
+       d="M119 13Q147 30 135 62M125 58L135 66L144 56"
+       fill="none"
+       id="path193" />
+  </g>
+  <text
+     x="814"
+     y="813"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="18"
+     fill="#93A9BA"
+     font-weight="700"
+     text-anchor="start"
+     id="text197">INPUT</text>
+  <text
+     x="814"
+     y="844"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="23"
+     fill="#F1F5FA"
+     font-weight="400"
+     text-anchor="start"
+     id="text199">Data</text>
+  <path
+     d="M1075 828V896"
+     fill="none"
+     stroke="#55D1DB"
+     stroke-width="2.5"
+     marker-end="url(#arrow)"
+     id="path201" />
+  <text
+     x="814"
+     y="910"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="18"
+     fill="#93A9BA"
+     font-weight="700"
+     text-anchor="start"
+     id="text203">OUTPUT</text>
+  <text
+     x="814"
+     y="941"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="23"
+     fill="#F1F5FA"
+     font-weight="400"
+     text-anchor="start"
+     id="text205">Centre-of-rotation</text>
+  <text
+     x="814"
+     y="968"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="23"
+     fill="#F1F5FA"
+     font-weight="400"
+     text-anchor="start"
+     id="text207">(CoR) value</text>
+  <rect
+     x="1150"
+     y="625"
+     width="340"
+     height="391"
+     rx="16"
+     fill="#122130"
+     stroke="#344A5F"
+     stroke-width="2"
+     id="rect209" />
+  <path
+     d="M1166 626H1474"
+     stroke="#70D7B5"
+     stroke-width="5"
+     id="path211" />
+  <text
+     x="1174"
+     y="674"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="27"
+     fill="#70D7B5"
+     font-weight="700"
+     text-anchor="start"
+     id="text213">Reconstruction</text>
+  <g
+     transform="translate(1240,690)"
+     stroke="#70D7B5"
+     stroke-width="2.5"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="g233">
+    <rect
+       x="0"
+       y="12"
+       width="57"
+       height="66"
+       rx="3"
+       fill="#162A32"
+       id="rect215" />
+    <polyline
+       points="28.50,18.00 30.19,18.68 31.86,19.35 33.52,20.02 35.14,20.70 36.73,21.38 38.26,22.05 39.73,22.73 41.14,23.40 42.46,24.07 43.70,24.75 44.85,25.43 45.89,26.10 46.83,26.77 47.66,27.45 48.36,28.12 48.95,28.80 49.41,29.48 49.74,30.15 49.93,30.82 50.00,31.50 49.93,32.17 49.74,32.85 49.41,33.52 48.95,34.20 48.36,34.88 47.66,35.55 46.83,36.23 45.89,36.90 44.85,37.58 43.70,38.25 42.46,38.92 41.14,39.60 39.73,40.27 38.26,40.95 36.73,41.62 35.14,42.30 33.52,42.98 31.86,43.65 30.19,44.33 28.50,45.00 26.81,45.67 25.14,46.35 23.48,47.02 21.86,47.70 20.27,48.38 18.74,49.05 17.27,49.73 15.86,50.40 14.54,51.08 13.30,51.75 12.15,52.42 11.11,53.10 10.17,53.77 9.34,54.45 8.64,55.12 8.05,55.80 7.59,56.48 7.26,57.15 7.07,57.83 7.00,58.50 7.07,59.17 7.26,59.85 7.59,60.52 8.05,61.20 8.64,61.88 9.34,62.55 10.17,63.23 11.11,63.90 12.15,64.58 13.30,65.25 14.54,65.92 15.86,66.60 17.27,67.28 18.74,67.95 20.27,68.62 21.86,69.30 23.48,69.97 25.14,70.65 26.81,71.33 28.50,72.00"
+       fill="none"
+       stroke-width="1.6"
+       id="polyline217" />
+    <polyline
+       points="47.06,18.00 46.15,18.68 45.13,19.35 44.01,20.02 42.80,20.70 41.49,21.38 40.11,22.05 38.65,22.73 37.13,23.40 35.56,24.07 33.95,24.75 32.30,25.43 30.63,26.10 28.94,26.77 27.25,27.45 25.57,28.12 23.91,28.80 22.28,29.48 20.68,30.15 19.14,30.82 17.65,31.50 16.22,32.17 14.88,32.85 13.61,33.52 12.44,34.20 11.37,34.88 10.40,35.55 9.55,36.23 8.81,36.90 8.19,37.58 7.70,38.25 7.34,38.92 7.11,39.60 7.00,40.27 7.04,40.95 7.20,41.62 7.50,42.30 7.92,42.98 8.47,43.65 9.15,44.33 9.94,45.00 10.85,45.67 11.87,46.35 12.99,47.02 14.20,47.70 15.51,48.38 16.89,49.05 18.35,49.73 19.87,50.40 21.44,51.08 23.05,51.75 24.70,52.42 26.37,53.10 28.06,53.77 29.75,54.45 31.43,55.12 33.09,55.80 34.72,56.48 36.32,57.15 37.86,57.83 39.35,58.50 40.78,59.17 42.12,59.85 43.39,60.52 44.56,61.20 45.63,61.88 46.60,62.55 47.45,63.23 48.19,63.90 48.81,64.58 49.30,65.25 49.66,65.92 49.89,66.60 50.00,67.28 49.96,67.95 49.80,68.62 49.50,69.30 49.08,69.97 48.53,70.65 47.85,71.33 47.06,72.00"
+       fill="none"
+       stroke-width="1.6"
+       id="polyline219" />
+    <polyline
+       points="9.76,18.00 8.99,18.68 8.34,19.35 7.82,20.02 7.42,20.70 7.15,21.38 7.02,22.05 7.02,22.73 7.14,23.40 7.41,24.07 7.80,24.75 8.31,25.43 8.96,26.10 9.72,26.77 10.60,27.45 11.59,28.12 12.68,28.80 13.88,29.48 15.16,30.15 16.52,30.82 17.96,31.50 19.46,32.17 21.02,32.85 22.63,33.52 24.27,34.20 25.93,34.88 27.62,35.55 29.30,36.23 30.99,36.90 32.65,37.58 34.30,38.25 35.90,38.92 37.46,39.60 38.97,40.27 40.41,40.95 41.78,41.62 43.06,42.30 44.26,42.98 45.36,43.65 46.35,44.33 47.24,45.00 48.01,45.67 48.66,46.35 49.18,47.02 49.58,47.70 49.85,48.38 49.98,49.05 49.98,49.73 49.86,50.40 49.59,51.08 49.20,51.75 48.69,52.42 48.04,53.10 47.28,53.77 46.40,54.45 45.41,55.12 44.32,55.80 43.12,56.48 41.84,57.15 40.48,57.83 39.04,58.50 37.54,59.17 35.98,59.85 34.37,60.52 32.73,61.20 31.07,61.88 29.38,62.55 27.70,63.23 26.01,63.90 24.35,64.58 22.70,65.25 21.10,65.92 19.54,66.60 18.03,67.28 16.59,67.95 15.22,68.62 13.94,69.30 12.74,69.97 11.64,70.65 10.65,71.33 9.76,72.00"
+       fill="none"
+       stroke-width="1.6"
+       id="polyline221" />
+    <path
+       d="M68 45H96M87 36L97 45L87 54"
+       fill="none"
+       id="path223" />
+    <rect
+       x="108"
+       y="12"
+       width="57"
+       height="66"
+       fill="#172E36"
+       id="rect225" />
+    <ellipse
+       cx="136"
+       cy="45"
+       rx="22"
+       ry="27"
+       fill="#91CEB9"
+       stroke="none"
+       id="ellipse227" />
+    <ellipse
+       cx="129"
+       cy="42"
+       rx="6"
+       ry="11"
+       fill="#254E46"
+       stroke="none"
+       id="ellipse229" />
+    <circle
+       cx="146"
+       cy="51"
+       r="6"
+       fill="#D5ECE2"
+       stroke="none"
+       id="circle231" />
+  </g>
+  <text
+     x="1174"
+     y="813"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="18"
+     fill="#93A9BA"
+     font-weight="700"
+     text-anchor="start"
+     id="text235">INPUT</text>
+  <text
+     x="1174"
+     y="844"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="23"
+     fill="#F1F5FA"
+     font-weight="400"
+     text-anchor="start"
+     id="text237">Data, geometry,</text>
+  <text
+     x="1174"
+     y="871"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="23"
+     fill="#F1F5FA"
+     font-weight="400"
+     text-anchor="start"
+     id="text239">angles</text>
+  <path
+     d="M1435 828V896"
+     fill="none"
+     stroke="#55D1DB"
+     stroke-width="2.5"
+     marker-end="url(#arrow)"
+     id="path241" />
+  <text
+     x="1174"
+     y="910"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="18"
+     fill="#93A9BA"
+     font-weight="700"
+     text-anchor="start"
+     id="text243">OUTPUT</text>
+  <text
+     x="1174"
+     y="941"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="23"
+     fill="#F1F5FA"
+     font-weight="400"
+     text-anchor="start"
+     id="text245">Reconstructed image</text>
+  <rect
+     x="1510"
+     y="625"
+     width="340"
+     height="391"
+     rx="16"
+     fill="#122130"
+     stroke="#344A5F"
+     stroke-width="2"
+     id="rect247" />
+  <path
+     d="M1526 626H1834"
+     stroke="#86B8F5"
+     stroke-width="5"
+     id="path249" />
+  <text
+     x="1534"
+     y="674"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="27"
+     fill="#86B8F5"
+     font-weight="700"
+     text-anchor="start"
+     id="text251">Image saver</text>
+  <g
+     transform="translate(1600,690)"
+     stroke="#86B8F5"
+     stroke-width="2.5"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="g265">
+    <rect
+       x="3"
+       y="7"
+       width="45"
+       height="53"
+       fill="#1C3043"
+       id="rect253" />
+    <rect
+       x="11"
+       y="15"
+       width="45"
+       height="53"
+       fill="#243B52"
+       id="rect255" />
+    <rect
+       x="19"
+       y="23"
+       width="45"
+       height="53"
+       fill="#2D4660"
+       id="rect257" />
+    <path
+       d="M74 48H96M87 39L97 48L87 57"
+       fill="none"
+       id="path259" />
+    <path
+       d="M110 10H150L165 25V80H110Z"
+       fill="#243B52"
+       id="path261" />
+    <path
+       d="M121 10V32H151V11M121 80V52H153V80"
+       fill="none"
+       id="path263" />
+  </g>
+  <text
+     x="1534"
+     y="813"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="18"
+     fill="#93A9BA"
+     font-weight="700"
+     text-anchor="start"
+     id="text267">INPUT</text>
+  <text
+     x="1534"
+     y="844"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="23"
+     fill="#F1F5FA"
+     font-weight="400"
+     text-anchor="start"
+     id="text269">Data</text>
+  <path
+     d="M1795 828V896"
+     fill="none"
+     stroke="#55D1DB"
+     stroke-width="2.5"
+     marker-end="url(#arrow)"
+     id="path271" />
+  <text
+     x="1534"
+     y="910"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="18"
+     fill="#93A9BA"
+     font-weight="700"
+     text-anchor="start"
+     id="text273">OUTPUT</text>
+  <text
+     x="1534"
+     y="941"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="23"
+     fill="#F1F5FA"
+     font-weight="400"
+     text-anchor="start"
+     id="text275">No returned output</text>
+  <text
+     x="1534"
+     y="993"
+     font-family="Arial, Helvetica, sans-serif"
+     font-size="20"
+     fill="#BBC9D7"
+     font-weight="400"
+     text-anchor="start"
+     id="text277">Writes images to storage</text>
+</svg>

@@ -1,0 +1,14 @@
+Generated using the built-in image generation tool.
+Scientific educational diagram for a beginner HTTomo workshop slide, landscape 16:9, dark charcoal #191919 background, clean readable white sans-serif type, teal and gold accents, minimal flat precise diagram. Show a single front-facing rectangular detector image, no perspective, occupying left two thirds of canvas. Inside is a subtle grayscale transmission projection of a porous sample, schematic not experimental. Detector X horizontal, label "detector_x" below with arrow pointing right. Detector Y vertical, label "detector_y" to left with arrow pointing down. Show a thin horizontal central band across detector with dashed upper and lower boundaries. Label that band above/right "20 rows centred on mid". Upper boundary annotation "mid - 10", lower boundary "mid + 10". Show a vertical excluded margin on both left and right edges in muted gold shading, each labelled "15 px" with dimension marks; clearly label top of left inner boundary "begin + 15", top of right inner boundary "end - 15". The intersection of the central horizontal band and the region between the two inner vertical boundaries is bright translucent teal, clearly the selected rectangular strip. Outside this selected rectangle, dim the image. Make margins and band exaggerated for clarity, not quantitatively to scale. Right third: clean unboxed readable exact monospaced YAML text, preserving indentation:
+preview:
+  detector_y:
+    start: mid
+    start_offset: -10
+    stop: mid
+    stop_offset: 10
+  detector_x:
+    start: begin
+    start_offset: 15
+    stop: end
+    stop_offset: -15
+Small legend at bottom left teal swatch "Selected region". Footer exact text "All projection angles retained. Stop boundary excluded. Schematic, not to scale." No other title, no logos, no 3D cube, no reconstruction slice, no extra arrows or labels. Ensure annotations do not overlap.

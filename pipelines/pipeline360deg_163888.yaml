@@ -1,0 +1,111 @@
+# --- Standard tomography loader for NeXus files. ---
+- method: standard_tomo
+  module_path: httomo.data.hdf.loaders
+  parameters:
+    data_path: /entry1/tomo_entry/data/data
+    image_key_path: /entry1/tomo_entry/instrument/detector/image_key
+    rotation_angles:
+         data_path: /entry1/tomo_entry/data/rotation_angle
+    preview:
+      detector_x:   # horizontal data previewing/cropping.
+        # when null, the full data dimension is used, i.e., no previewing
+        start: null
+        stop: null
+      detector_y:   # vertical data previewing/cropping.
+        # when null, the full data dimension is used, i.e., no previewing
+        start: 1000
+        stop: 1050
+
+# --- Removing dead pixels in the data, aka zingers. Use if sharp streaks are present in reconstruction. ---
+- method: remove_outlier
+  module_path: httomolibgpu.misc.corr
+  parameters:
+    kernel_size: 3
+    dif: 1000  # A difference between the outlier value and the median value of neighboring pixels.
+
+# --- Calibration of projection data using collected flats/darks images. --- 
+- method: dark_flat_field_correction
+  module_path: httomolibgpu.prep.normalize
+  parameters:
+    flats_multiplier: 1.0
+    darks_multiplier: 1.0
+    upper_bound: null
+    lower_bound: null
+    clipping_warning: false
+
+# --- Finding overlap and center for 360 degrees scan. ---
+- method: find_center_360
+  module_path: httomolibgpu.recon.rotation
+  parameters:
+    ind: null
+    win_width: 10
+    side: null
+    denoise: true
+    norm: false
+    use_overlap: false
+  id: centering
+  side_outputs:
+    cor: centre_of_rotation
+    overlap: overlap
+    side: side
+    overlap_position: overlap_position
+
+# --- Method to remove stripe artefacts in the data that lead to ring artefacts in the reconstruction. --- 
+- method: remove_all_stripe
+  module_path: httomolibgpu.prep.stripe
+  parameters:
+    snr: 3.0
+    la_size: 61
+    sm_size: 21
+    dim: 1
+    normalize: false
+
+# --- Using the overlap provided, converting 360 degrees scan to 180 degrees scan. --- 
+- method: sino_360_to_180
+  module_path: httomolibgpu.misc.morph
+  parameters:
+    overlap: ${{centering.side_outputs.overlap}}
+    side: ${{centering.side_outputs.side}}
+
+# --- Negative log ---
+- method: minus_log
+  module_path: httomolibgpu.prep.normalize
+  parameters: {}    
+
+# --- Reconstruction method. ---
+- method: LPRec3d_tomobar
+  module_path: httomolibgpu.recon.algorithm
+  parameters:
+    center: ${{centering.side_outputs.centre_of_rotation}}
+    detector_pad: true
+    filter_type: shepp
+    filter_freq_cutoff: 1.0
+    recon_size: null
+    recon_mask_radius: 2.0
+
+# --- Calculate global statistics on the reconstructed volume, required for data rescaling. ---
+- method: calculate_stats
+  module_path: httomo.methods
+  parameters: {}
+  id: statistics
+  side_outputs:
+    glob_stats: glob_stats
+
+# --- Rescale data to different bit depth --- 
+
+- method: rescale_to_int
+  module_path: httomolib.misc.rescale
+  parameters:
+    perc_range_min: 1.0
+    perc_range_max: 99.0
+    bits: 16
+    glob_stats: ${{statistics.side_outputs.glob_stats}}
+
+# --- Save data to tiffs  --- 
+- method: save_to_images
+  module_path: httomolib.misc.images
+  parameters:
+    subfolder_name: images
+    axis: auto
+    file_format: tif
+    asynchronous: true

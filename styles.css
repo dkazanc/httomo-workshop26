@@ -1,0 +1,215 @@
+/* Increase the logo size and position it at the top-right */
+.workshop-logo {
+  position: fixed;
+  bottom: 20px;
+  width: auto;
+  height: 70px;
+  max-width: 180px;
+  object-fit: contain;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.workshop-logo-left {
+  left: 52px;
+  height: 55px;
+}
+
+.workshop-logo-right {
+  right: 60px;
+  height: 70px;
+}
+
+.reveal table {
+  width: 95%;
+  font-size: 0.82em;
+}
+
+.reveal table th,
+.reveal table td {
+  padding: 0.45em 0.7em;
+  vertical-align: middle;
+}
+
+.reveal table th:first-child,
+.reveal table td:first-child {
+  width: 22%;
+  white-space: nowrap;
+}
+
+/* Agenda highlights are scoped to each day; row numbers exclude the header. */
+/* Monday: registration, coffee, lunch, afternoon break and dinner. */
+.reveal #monday-2-november-day-1 tbody tr:nth-child(1),
+.reveal #monday-2-november-day-1 tbody tr:nth-child(5),
+.reveal #monday-2-november-day-1 tbody tr:nth-child(8),
+.reveal #monday-2-november-day-1 tbody tr:nth-child(10),
+.reveal #monday-2-november-day-1 tbody tr:nth-child(12),
+.reveal #monday-2-november-day-1 tbody tr:nth-child(14),
+/* Tuesday: morning coffee, lunch and afternoon coffee. */
+.reveal #tuesday-3-november tbody tr:nth-child(4),
+.reveal #tuesday-3-november tbody tr:nth-child(8),
+.reveal #tuesday-3-november tbody tr:nth-child(10) {
+  background-color: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.reveal .slide .column p {
+  text-align: justify;
+  hyphens: auto;
+  line-height: 1.4;
+}
+
+.reveal .slide .caption {
+  font-family: Georgia, serif;
+  font-size: 0.75em;
+  font-weight: normal;
+}
+
+.reveal .slide .column figure {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.reveal .slide .column img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reveal { font-family: Arial, sans-serif; font-size: 29px; color: #f1f1f1; }
+.reveal h2 { font-size: 58px; color: #ffffff; text-transform: none; margin-bottom: 24px; }
+.reveal h3 { font-size: 33px; color: #65cbd5; text-transform: none; margin: 16px 0; }
+.reveal pre { font-size: 25px; box-shadow: none; width: 100%; margin: 15px 0; }
+.reveal pre code { padding: 20px; max-height: none; line-height: 1.3; }
+.reveal .columns { gap: 70px; }
+.reveal p { margin: 15px 0; line-height: 1.35; }
+.reveal ul { margin-left: 27px; }
+.reveal li { margin-bottom: 16px; line-height: 1.35; }
+.reveal .source { font-size: 20px; margin-top: 24px; }
+
+.reveal a {
+  color: #f2c879;
+  font-family: Georgia, serif;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+.reveal a:hover,
+.reveal a:focus-visible {
+  color: #ffe3ad;
+  text-decoration-thickness: 2px;
+}
+
+/* Preserve the font used in code blocks */
+.reveal pre a {
+  font-family: inherit;
+}
+
+/* Keep footer links compact */
+.reveal .footer a {
+  font-family: Arial, sans-serif;
+  font-size: inherit;
+}
+
+.reveal .slide .image-row {
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.reveal .slide .image-row p {
+  display: contents;
+}
+
+.reveal .slide .image-row img {
+  width: 70%;
+  height: auto;
+  margin: 0;
+}
+
+.reveal .slide .column figure figcaption {
+  width: 100%;
+  text-align: left;
+}
+
+
+.mpi-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 22px 0 18px; }
+.rank { border: 2px solid #65cbd5; border-radius: 12px; padding: 18px 8px; text-align: center; background: rgba(101,203,213,.08); }
+.rank strong { display: block; color: #65cbd5; font-size: 27px; }
+.rank span { display: block; color: #d8e1e8; font-size: 21px; margin-top: 6px; }
+.result { border-left: 5px solid #f2c879; background: rgba(242,200,121,.08); padding: 16px 20px; margin-top: 20px; font-size: 27px; }
+
+
+#title-slide {
+  position: absolute;
+}
+
+#title-slide .title {
+  position: relative;
+  width: 100%;
+  margin: 15px 0 20px;
+  font-size: 54px;
+  line-height: 1.15;
+  text-align: center;
+}
+
+#title-slide .subtitle {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+
+#title-slide .title-framework-image {
+  width: 760px;
+  height: 428px;
+  max-width: 100%;
+  object-fit: contain;
+  margin: 0 0 14px;
+}
+
+#title-slide .quarto-title-authors {
+  position: relative;
+  width: 100%;
+  margin: 18px 0 0;
+}
+
+.reveal .pipeline-table {
+  width: 100%;
+  font-size: 0.65em;
+}
+.reveal .pipeline-table th,
+.reveal .pipeline-table td {
+  padding: 0.45em 0.55em;
+  vertical-align: middle;
+}
+.reveal .pipeline-table .loader,
+.reveal .pipeline-table .reconstruction {
+  background: rgba(92, 214, 133, 0.12);
+}
+.reveal .pipeline-table .preprocessing {
+  background: rgba(255, 216, 102, 0.12);
+}
+.reveal .pipeline-table .saving {
+  background: rgba(240, 128, 216, 0.12);
+}
+.reveal .pipeline-table .group {
+  font-weight: bold;
+  border-left: 4px solid currentColor;
+}
+.reveal .pipeline-table .loader .group.group {
+  color: #5cd685;
+}
+.reveal .pipeline-table .reconstruction .group {
+  color: #b8abf7;
+}
+.reveal .pipeline-table .preprocessing .group {
+  color: #ffd866;
+}
+.reveal .pipeline-table .saving .group {
+  color: #f080d8;
+}
