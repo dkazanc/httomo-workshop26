@@ -1,10 +1,8 @@
 ---
 title: "Tomography Workshop: HTTomo - a high-throughput tomography software in Python for large data processing"
-subtitle: |
-  <img class="title-framework-image" src="images/cool_httomo_framework_autogen.png" alt="Illustration of HTTomo processing projections into a reconstructed volume using GPUs and cluster computers."><br>
-  DLS, 2-3 November 2026
+subtitle: 2-3 November 2026
 author:
-  - name: "Imaging Team (part of DAG)"
+  - name: "Organisers: Data analysis group and imaging village"
     affiliation: "Diamond Light Source, UK"
 ---
 
@@ -20,7 +18,7 @@ author:
 | 10:20–10:50 | Tomography basics: Part 1: Introduction to Tomography | Alexender Liptak |
 | 10:50–11:05 | ☕ Coffee 15-min break | — |
 | 11:05–11:30 | Introduction to HTTomo | Daniil Kazantsev |
-| 11:30–12:00 | Tomography basics: Part 2: Running a tomography experiment at I12 using HTTomo | Alexender Liptak |
+| 11:30–12:00 | Tomography basics: Part 2: Running a tomography experiment using HTTomo | Alexender Liptak |
 | 12:00–13:00 | 🥪 Lunch | — |
 | 13:00–15:00 | Tutorial I: getting started | Daniil Kazantsev / Yousef Moazzam |
 | 15:00–15:30 | ☕ Coffee 30-min break | — |
@@ -55,19 +53,18 @@ author:
 [Published agenda](https://www.diamond.ac.uk/Home/Events/2026/Tomography-Workshop-HTTomo.html)
 :::
 
-<!--
+
 ## Workshop objectives
 
-By the end of this session, you will be able to:
+By the end of the workshop, you will be able to:
 
-- understand HTTomo's framework, key concepts and workflow
-- configure processing pipelines for CPU and GPU
-- load and preview tomography data
-- run CPU and/or GPU pipelines
-- visualise the results
-- perform parameter sweeps
-- understand how HTTomo applies GPU and HPC concepts to large-data processing
--->
+- **Explain the tomography workflow:** data acquisition, reconstruction and analysis.
+- **Describe HTTomo’s role** in processing large tomography datasets.
+- **Build and run custom YAML pipelines** using HTTomo’s processing methods.
+- **Submit and monitor jobs on Diamond’s cluster**, and troubleshoot common problems.
+- **Apply complete processing workflows to real datasets** and assess reconstruction quality.
+- **Use Diamond’s new web interface** to submit HTTomo jobs from a browser.
+
 
 <!--
 ####################################################
@@ -79,20 +76,27 @@ By the end of this session, you will be able to:
 
 ## Introduction to HTTomo
 
+:::: {.columns}
+::: {.column width="46%"}
+
 - What is HTTomo?
 - Input and output
 - Pipelines, YAML and templates
 - Processing libraries as backends
 - Input data format: HDF5/NeXus
 - Loader and previewing
-- Full pipeline and running HTTomo at DLS
+- How to run HTTomo at Diamond
+
+:::
+::: {.column width="50%"}
+
+![](images/cool_httomo_framework_autogen.png){.nostretch width=100% fig-alt="HTTomo workflow from projections to reconstruction using GPUs and cluster resources."}
+:::
+::::
 
 ##
 
-![](images/dls_tomography_slide.svg){
-  width=100%
-  fig-alt="DLS"
-}
+![](images/dls_tomography_slide.svg){.nostretch width=100% height=700px style="object-fit: contain;" fig-alt="Tomographic imaging at Diamond Light Source."}
 
 ::: {.footer}
 [Diamond Light Source website](https://www.diamond.ac.uk/Home.html)
@@ -100,9 +104,9 @@ By the end of this session, you will be able to:
 
 ## What is HTTomo?
 
-**HTTomo is open-source Python software that processes parallel-beam tomography scans into reconstructed 3D images.**
+**HTTomo is open-source software for parallel-beam tomography data processing and reconstruction.**
 
-It is designed for high-throughput processing: handling large amounts of scan data efficiently.
+It is designed for high-throughput processing, i.e., handling large amounts of scan data with computational efficiency.
 
 ::: {style="text-align: center; margin: 1.2em 0; padding: 0.7em 0; border-top: 2px solid #66c2d7; border-bottom: 2px solid #66c2d7; font-size: 1.2em;"}
 **Load scan data → Correct the images → Reconstruct → Save results**
@@ -111,24 +115,30 @@ It is designed for high-throughput processing: handling large amounts of scan da
 :::: {.columns}
 ::: {.column width="48%"}
 
+::: {.fragment}
+
 ### You provide
 
-- **Scan data:** X-ray images taken at different angles.
-- **A processing recipe:** a [YAML](#what-is-yaml) text file listing the steps and settings.
+- **Scan data:** X-ray images taken at different angles saved into a data file. 
+- **A processing recipe:** a [YAML](#what-is-yaml) text file listing the steps or methods and their parameters.
+
+:::
 
 :::
 ::: {.column width="48%"}
+::: {.fragment}
 
 ### HTTomo handles
 
-- Running the processing steps in order.
+- Running the processing steps in descending order.
 - Managing data and memory, with support for CPUs, GPUs and HPC clusters.
 
 :::
+:::
 ::::
 
-<!--
-## What is HTTomo?
+
+## What else is HTTomo?
 
 :::: {.columns}
 
@@ -138,48 +148,48 @@ It is designed for high-throughput processing: handling large amounts of scan da
 
 ::: {.column width="68%"}
 
-### Designed for high-throughput parallel-beam tomography
-
-- **Scalable processing** for increasingly large datasets
-- **GPU computation** with fewer host–device transfers
-- **Plug-and-play methods** using libraries such as TomoPy and accelerated GPU/CPU in-house libraries
-- **Independent and replaceable user-interface layer**
-- Built using **modern Python development** practices, including comprehensive testing, mocking, type checking, and automated quality checks.
+- Written in modern **Python**, using object-oriented design.
+- A framework for **parallel data processing**.
+- Designed to **scale to increasingly large datasets**.
+- Supports **plug-and-play processing methods** from TomoPy and in-house GPU-accelerated libraries.
+- Separates processing from an **independent, replaceable user interface**.
 :::
 ::::
 
 ::: {.footer}
-[HTTomo documentation](https://diamondlightsource.github.io/httomo/)
+[HTTomo github page](https://github.com/DiamondLightSource/httomo)
 :::
--->
 
 
 ## Input and Output in HTTomo {#input-output}
 
-![](images/in_out_tomography_httomo.png){width=100%}
+![](images/in_out_tomography_httomo.png){width=80%}
 
 ## What is a pipeline?
 
 A **pipeline** is a sequence of steps that processes your data.
 
-1. **Load** the projection images.
-2. **Correct** the images using flat and dark fields.
-3. **Reconstruct** slices that reveal the sample’s inner structure.
-4. **Save** the results for inspection.
+1. **Load** the projection data.
+2. **Calibrate** data using flat and dark fields.
+3. **Pre-process** data
+4. **Reconstruct** slices that reveal the sample’s inner structure.
+5. **Save** the results for inspection.
 
 Each step passes its result to the next step.
 
 ::: {.fragment}
-In **HTTomo**, a [YAML](#what-is-yaml) file lists these steps **in the order they run**.
+In **HTTomo**, a [YAML](#what-is-yaml) file orchestrates these steps how they should run.
 :::
 
 ## What is YAML? {#what-is-yaml}
 
 **YAML** stands for **YAML Ain’t Markup Language**. It is a readable text format for storing configuration.
 
-- **Key–value pairs** define settings: `kernel_size: 3`
-- **Indentation** groups related settings. Use spaces, not tabs.
+In HTTomo, YAML describes **which methods to run, in what order, and with which parameters**.
+
 - **Dashes (`-`)** introduce list items.
+- **Key–value pairs** define settings or parameters: `kernel_size: 3`
+- **Indentation** groups related settings. Use spaces, not tabs.
 - **Comments (`#`)** explain settings.
 
 ```yaml
@@ -191,7 +201,40 @@ In **HTTomo**, a [YAML](#what-is-yaml) file lists these steps **in the order the
     dif: 1000
 ```
 
-In HTTomo, YAML describes **which methods to run, in what order, and with which parameters**.
+## Reading/editing YAML {.smaller}
+
+Use an editor such as [VS Code in your browser](https://vscode.dev/). Enable **Render Whitespace** to spot tabs and indentation.
+
+| Common mistake | Incorrect example | Correct example |
+|---|---|---|
+| **Tabs for indentation** | <code>parameters:<br>[TAB]kernel_size: 3</code> | <code>parameters:<br>&nbsp;&nbsp;kernel_size: 3</code> |
+| **Misaligned parameters** | <code>parameters:<br>&nbsp;&nbsp;kernel_size: 3<br>dif: 1000</code> | <code>parameters:<br>&nbsp;&nbsp;kernel_size: 3<br>&nbsp;&nbsp;dif: 1000</code> |
+| **Missing space after `:`** | `kernel_size:3` | `kernel_size: 3` |
+| **Missing list-item dash** | `method: remove_outlier` | `- method: remove_outlier` |
+| **Misspelled names** | <code>method: remove_outliers<br>kernal_size: 3</code> | <code>method: remove_outlier<br>kernel_size: 3</code> |
+
+`[TAB]` represents a tab character. The corrected examples use **two spaces per indentation level**; method parameters sit beneath `parameters:`.
+
+
+::: {.fragment}
+
+::: {.callout-warning style="font-size: 1.4em;"}
+
+HTTomo does perform some checks of the YAML file, however, **valid YAML is not always a valid HTTomo pipeline:** a spelling error or incorrect nesting can parse successfully but fail HTTomo’s checks.
+
+:::
+
+
+
+::: {.callout-tip style="font-size: 1.4em;"}
+
+**Tip:** copy a method template, preserve its structure, and change one setting at a time.
+
+:::
+
+
+:::
+
 
 ## How do we tell HTTomo what to do?
 
@@ -204,51 +247,45 @@ This file describes:
 - **Which settings** each method needs.
 
 ::: {.fragment}
-Then we run HTTomo with an input dataset, a pipeline file and an output folder:
+Then at Diamond we run HTTomo by submitting a job to the computer cluster called `wilson`. For this, you require an input dataset, a pipeline file and an output folder:
 
 ```bash
-httomo input.nxs pipeline.yaml output_dir
+httomo_mpi input.nxs pipeline.yaml output_dir
 ```
 :::
 
-## Reading YAML
+::: {.footer}
+[How to run HTTomo at Diamond](#how_to_run_httomo)
+:::
 
-Use an editor such as [VS Code in your browser](https://vscode.dev/) to open and edit `.yaml` files.
+## Where do the methods come from?
 
-::: {.columns}
-::: {.column width="55%"}
+HTTomo runs processing methods provided by [Python processing libraries](https://diamondlightsource.github.io/httomo/backends/list.html#backends-list) also called [backends](https://diamondlightsource.github.io/httomo/reference/glossary.html#term-backend).
+
+| Library | What it provides |
+|---|---|
+| [TomoPy](https://tomopy.readthedocs.io/en/stable/) | A well-known library of methods for tomography processing and reconstruction on CPUs. |
+| [HTTomolibGPU](https://diamondlightsource.github.io/httomolibgpu/)  | Our in-house developed library of GPU processing and reconstruction methods. |
+| [HTTomolib](https://diamondlightsource.github.io/httomolib/) | Our in-house library of CPU processing methods and utilities. |
+
+
+::: {.fragment}
+
+In HTTomo, **`module_path`** provides information in which module to find a  **`method`**. HTTomo **imports** that method just before the execution of the method, i.e., during the HTTomo's runtime. 
 
 ```yaml
-# One processing step
 - method: remove_outlier
   module_path: httomolibgpu.misc.corr
-  parameters:
-    kernel_size: 3
-    dif: 1000
 ```
-
-- `key: value` defines a setting.
-- `-` starts a new list item.
-- Indentation groups related settings.
-- `#` starts a comment.
-
-:::
-::: {.column width="45%"}
-::: {.fragment}
-**Common editing mistakes**
-
-- Using **tabs** instead of spaces.
-- Misaligning settings that belong together.
-- Forgetting the space after `:`.
-- Removing the `-` before a step.
-- Misspelling method or parameter names.
-
-**Tip:** Copy a working example and change one value at a time.
-:::
-:::
 :::
 
-## One HTTomo processing step
+::: {.footer}
+[TomoPy](https://github.com/tomopy/tomopy) ·
+[HTTomolibGPU](https://github.com/DiamondLightSource/httomolibgpu)
+[HTTomolib](https://github.com/DiamondLightSource/httomolib) ·
+:::
+
+## Consider one HTTomo processing step
 
 This step removes outliers, such as isolated bright pixels, from the data.
 
@@ -266,42 +303,19 @@ This step removes outliers, such as isolated bright pixels, from the data.
 
 **`parameters`** — settings that control the method.
 
-## Where do the methods come from?
-
-HTTomo runs processing methods provided by [Python processing libraries](https://diamondlightsource.github.io/httomo/backends/list.html#backends-list) or [backends](https://diamondlightsource.github.io/httomo/reference/glossary.html#term-backend).
-
-| Library | What it provides |
-|---|---|
-| **TomoPy** | An external library for tomography processing and reconstruction on CPUs. |
-| **HTTomolib** | Our in-house library of CPU processing methods and utilities. |
-| **HTTomolibGPU** | Our in-house library of GPU processing and reconstruction methods. |
-
-The **`module_path`** tells HTTomo where to find a method:
-
-```yaml
-- method: remove_outlier
-  module_path: httomolibgpu.misc.corr
-```
-::: {.footer}
-[TomoPy](https://github.com/tomopy/tomopy) ·
-[HTTomolib](https://github.com/DiamondLightSource/httomolib) ·
-[HTTomolibGPU](https://github.com/DiamondLightSource/httomolibgpu)
-:::
-
-
 ## How to find a processing method?
 
 A **method template** is a YAML snippet you can copy into your pipeline.
 
 1. Open [Methods YAML Templates](https://diamondlightsource.github.io/httomo/backends/templates.html).
-2. Choose templates for your version: **Archived** for a tagged release, or **Latest** for the development version.
+2. Choose templates for your version: **Archived** for a tagged release, or **Latest** for the development version (we will use **latest** templates for this workshop).
 3. Browse the library and module, or use the documentation search to find a method.
 4. Copy its **YAML template** into your pipeline.
 5. Follow the module’s **API documentation** link to learn what the method does and what its parameters mean.
 
-**Example:** Find `remove_outlier` in `httomolibgpu.misc.corr`.
+**Demo example:** Find `remove_outlier` in `httomolibgpu.misc.corr`.
 
-## A complete pipeline general structure
+## A general structure of complete pipeline
 
 A pipeline combines individual methods into **one ordered YAML list**.
 
@@ -331,13 +345,13 @@ For example, a full pipeline can contain the following methods:
 </tr>
 <tr class="preprocessing">
   <td>4</td>
-  <td><code>minus_log</code></td>
-  <td>Convert transmission into attenuation values.</td>
+  <td><code>remove_all_stripe</code></td>
+  <td>Reduce stripes that can produce ring artefacts.</td>
 </tr>
 <tr class="preprocessing">
   <td>5</td>
-  <td><code>remove_all_stripe</code></td>
-  <td>Reduce stripes that can produce ring artefacts.</td>
+  <td><code>minus_log</code></td>
+  <td>Convert transmission into attenuation values.</td>
 </tr>
 <tr class="reconstruction">
   <td class="group">Reconstruction</td>
@@ -385,7 +399,7 @@ Browse the file hierarchy, inspect metadata, then plot a dataset.
 
 :::: {.columns}
 ::: {.column width="48%"}
-### [DAWN](https://dawnsci.org/) (Diamond's tool)
+### [DAWN](https://dawnsci.org/) (Diamond's tool of choice)
 
 **Desktop visualisation and analysis**
 
@@ -419,7 +433,8 @@ Browse the file hierarchy, inspect metadata, then plot a dataset.
 A sinogram view in [DAWN](https://dawnsci.org/) of a synthetic dataset packed into a NeXus file `tomodata_synth.nxs`.
 
 ![](images/dawn_view.png){
-  width=100%
+  .nostretch
+  width=70%
   fig-alt="Synthetic tomography data in DAWN"
 }
 
@@ -427,7 +442,8 @@ A sinogram view in [DAWN](https://dawnsci.org/) of a synthetic dataset packed in
 ## Data loading and previewing in HTTomo
 
 ![](images/tutorial-prepare-dark.png){
-  width=100%
+  .nostretch
+  width=70%
   fig-alt="Data previewing in HTTomo"
 }
 
@@ -486,7 +502,7 @@ A sinogram view in [DAWN](https://dawnsci.org/) of a synthetic dataset packed in
 :::
 
 
-## Previewing examples {#previewing-examples.smaller}
+## Previewing examples {#previewing-examples .smaller}
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -532,8 +548,8 @@ preview:
     stop: mid
     stop_offset: 50
 ```
-::: {.callout-warning}
-Crop `detector_x` only when the sample is fully within the field of view. Otherwise you can remove part of the useful data which will lead to incorrect reconstructions.
+::: {.callout-warning style="font-size: 1.4em;"}
+Crop `detector_x` only when the sample is fully within the field of view. Otherwise you can remove part of the useful data and it will lead to incorrect reconstructions.
 :::
 :::
 :::
@@ -556,9 +572,8 @@ Crop `detector_x` only when the sample is fully within the field of view. Otherw
     image_key_path: auto
     rotation_angles: auto
     preview:
-      detector_x:   # horizontal data previewing/cropping.
-        # when null, the full data dimension is used, i.e., no previewing
-        start: null
+      detector_x:   # horizontal data previewing/cropping.        
+        start: null # null -  no previewing
         stop: null
       detector_y:
         start: mid
@@ -658,7 +673,7 @@ httomo_mpi input.nxs pipeline.yaml output_dir
 4. Tail the job to monitor the progress:
 
 ```bash
-tail jobid
+tail -f jobid
 ```
 
 :::
@@ -881,10 +896,11 @@ Following [previewing examples](#previewing-examples), modify the loader's `prev
 [HTTomo real-data examples](https://diamondlightsource.github.io/httomo/howto/tutorial/real_data_example.html)
 :::
 
-## Data preprocessing
+## Data pre-processing
 
+![](images/preprocessing-chapter-dark.png){.nostretch width=90%}
 
-## Calibration and linearisation {#calibration-linearisation .smaller}
+## Transmission data calibration and linearisation {#calibration-linearisation .smaller}
 
 :::: {.columns}
 ::: {.column width="43%"}
@@ -1212,7 +1228,7 @@ The offset $d$ measures its displacement from the detector centre. Estimate the 
 </video>
 
 ::: {style="font-size: 0.5em;"}
-Synthetic demonstration based on [Vo et al., Optics Express 29, 17849–17874 (2021), §2.1.1.1 and Fig. 1](https://doi.org/10.1364/OE.418448).
+Synthetic demonstration based on [Vo et al., Optics Express 2, (2014)](https://doi.org/10.1364/OE.22.019078).
 :::
 
 ## {#wrappers}
