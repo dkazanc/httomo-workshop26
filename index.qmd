@@ -2,7 +2,7 @@
 title: "Tomography Workshop: HTTomo - a high-throughput tomography software in Python for large data processing"
 subtitle: 2-3 November 2026
 author:
-  - name: "Organisers: Data analysis group and imaging village"
+  - name: "Organisers: Data analysis group and Imaging village"
     affiliation: "Diamond Light Source, UK"
 ---
 
