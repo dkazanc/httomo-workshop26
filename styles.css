@@ -46,9 +46,10 @@
 .reveal #monday-2-november-day-1 tbody tr:nth-child(12),
 .reveal #monday-2-november-day-1 tbody tr:nth-child(14),
 /* Tuesday: morning coffee, lunch and afternoon coffee. */
-.reveal #tuesday-3-november tbody tr:nth-child(4),
-.reveal #tuesday-3-november tbody tr:nth-child(8),
-.reveal #tuesday-3-november tbody tr:nth-child(10) {
+.reveal #tuesday-3-november-day-2 tbody tr:nth-child(4),
+.reveal #tuesday-3-november-day-2 tbody tr:nth-child(7),
+.reveal #tuesday-3-november-day-2 tbody tr:nth-child(8),
+.reveal #tuesday-3-november-day-2 tbody tr:nth-child(10) {
   background-color: rgba(255, 255, 255, 0.14);
   color: #ffffff;
   font-weight: 600;
@@ -213,3 +214,77 @@
 .reveal .pipeline-table .saving .group {
   color: #f080d8;
 }
+
+/* Exercise 1: keep the complete pipeline inside a bounded, scrollable panel. */
+.reveal #exercise1 .exercise1-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.35fr;
+  gap: 42px;
+  align-items: start;
+}
+.reveal #exercise1 .exercise1-layout > div { min-width: 0; }
+.reveal #exercise1 .exercise1-instructions { font-size: 27px; }
+.reveal #exercise1 .exercise1-instructions ol { margin-left: 1.1em; }
+.reveal #exercise1 .exercise1-instructions li { margin-bottom: 22px; }
+.reveal #exercise1 .exercise1-hint {
+  border-left: 4px solid #65cbd5;
+  padding: 1px 18px;
+  background: rgba(101, 203, 213, 0.08);
+  font-size: 24px;
+}
+.reveal #exercise1 .exercise1-pipeline > p {
+  font-size: 22px;
+  color: #c9d1d9;
+  margin: 8px 0 14px;
+}
+.reveal #exercise1 .exercise1-code {
+  height: 540px;
+  overflow: auto;
+  border: 1px solid #52616b;
+  border-radius: 10px;
+  background: #111820;
+  scrollbar-color: #65cbd5 #25313b;
+  scrollbar-width: auto;
+}
+.reveal #exercise1 .exercise1-code:focus-visible { outline: 2px solid #65cbd5; }
+.reveal #exercise1 .exercise1-code div.sourceCode { margin: 0; overflow: visible; }
+.reveal #exercise1 .exercise1-code pre { margin: 0; font-size: 20px; }
+.reveal #exercise1 .exercise1-code pre code {
+  max-height: none;
+  overflow: visible;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 18px;
+  line-height: 1.35;
+}
+
+.reveal #exercise1 .exercise1-heading {
+  display: block;
+  font-size: 33px;
+  color: #65cbd5;
+  margin: 16px 0;
+  line-height: 1.2;
+}
+
+/* Exercise 3: display the full loader beside the task instructions. */
+.reveal #preview_lorentz .exercise3-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.25fr;
+  gap: 42px;
+  align-items: start;
+}
+.reveal #preview_lorentz .exercise3-layout > div { min-width: 0; }
+.reveal #preview_lorentz .exercise3-instructions { font-size: 24px; }
+.reveal #preview_lorentz .exercise3-heading { color: #65cbd5; font-size: 28px; }
+.reveal #preview_lorentz .exercise3-instructions li { margin-bottom: 12px; }
+.reveal #preview_lorentz .exercise3-template div.sourceCode { margin: 0; }
+.reveal #preview_lorentz .exercise3-template pre { margin: 0; font-size: 22px; }
+.reveal #preview_lorentz .exercise3-template pre code {
+  padding: 16px;
+  line-height: 1.12;
+  max-height: none;
+}
+
+.reveal #preview_lorentz .exercise3-instructions div.sourceCode { margin: 12px 0 0; }
+.reveal #preview_lorentz .exercise3-instructions pre { margin: 0; font-size: 20px; }
+.reveal #preview_lorentz .exercise3-instructions pre code { padding: 14px; line-height: 1.12; max-height: none; }

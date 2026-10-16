@@ -19,7 +19,7 @@ author:
 | 10:50–11:05 | ☕ Coffee 15-min break | — |
 | 11:05–11:30 | Introduction to HTTomo | Daniil Kazantsev |
 | 11:30–12:00 | Tomography basics: Part 2: Running a tomography experiment using HTTomo | Alexender Liptak |
-| 12:00–13:00 | 🥪 Lunch | — |
+| 12:00–13:00 | 🥪 Lunch  — Atrium | — |
 | 13:00–15:00 | Tutorial I: getting started | Daniil Kazantsev / Yousef Moazzam |
 | 15:00–15:30 | ☕ Coffee 30-min break | — |
 | 15:30–17:00 | Tutorial II: running end-to-end pipelines on Diamond HPC | Daniil Kazantsev / Yousef Moazzam |
@@ -45,7 +45,7 @@ author:
 | 11:00–11:30 | HTTomo web interfaces | Yousef Moazzam |
 | 11:30–12:00 | Output visualisation tools | Benedikt Daurer |
 | 12:00–12:15 | 📸 Group photo | — |
-| 12:15–13:00 | 🥪 Lunch | — |
+| 12:15–13:00 | 🥪 Lunch — Atrium | — |
 | 13:00–14:30 | Tutorial III: web interface & output visualisation | Daniil Kazantsev / Yousef Moazzam |
 | 14:30–15:00 | ☕ Coffee 30-min break | — |
 | 15:00–16:30 | Tutorial IV: Q&A, debugging, intermediates & installation | Daniil Kazantsev / Yousef Moazzam |
@@ -96,7 +96,7 @@ By the end of the workshop, you will be able to:
 
 ##
 
-![](images/dls_tomography_slide.svg){.nostretch width=100% height=700px style="object-fit: contain;" fig-alt="Tomographic imaging at Diamond Light Source."}
+![](images/dls_tomography_slide.svg){width=100% height=700px style="object-fit: contain;" fig-alt="Tomographic imaging at Diamond Light Source."}
 
 ::: {.footer}
 [Diamond Light Source website](https://www.diamond.ac.uk/Home.html)
@@ -131,7 +131,7 @@ It is designed for high-throughput processing, i.e., handling large amounts of s
 ### HTTomo handles
 
 - Running the processing steps in descending order.
-- Managing data and memory, with support for CPUs, GPUs and HPC clusters.
+- Managing data and memory, with support for GPU processing and HPC clusters.
 
 :::
 :::
@@ -148,7 +148,7 @@ It is designed for high-throughput processing, i.e., handling large amounts of s
 
 ::: {.column width="68%"}
 
-- Written in modern **Python**, using object-oriented design.
+- A software written in modern **Python** language, using object-oriented design.
 - A framework for **parallel data processing**.
 - Designed to **scale to increasingly large datasets**.
 - Supports **plug-and-play processing methods** from TomoPy and in-house GPU-accelerated libraries.
@@ -170,15 +170,15 @@ It is designed for high-throughput processing, i.e., handling large amounts of s
 A **pipeline** is a sequence of steps that processes your data.
 
 1. **Load** the projection data.
-2. **Calibrate** data using flat and dark fields.
-3. **Pre-process** data
+2. **Calibrate** data using flat and dark fields (if available).
+3. **Pre-process** data with various filters
 4. **Reconstruct** slices that reveal the sample’s inner structure.
 5. **Save** the results for inspection.
 
 Each step passes its result to the next step.
 
 ::: {.fragment}
-In **HTTomo**, a [YAML](#what-is-yaml) file orchestrates these steps how they should run.
+In **HTTomo**, a [YAML](#what-is-yaml) file orchestrates how the steps should run.
 :::
 
 ## What is YAML? {#what-is-yaml}
@@ -186,6 +186,9 @@ In **HTTomo**, a [YAML](#what-is-yaml) file orchestrates these steps how they sh
 **YAML** stands for **YAML Ain’t Markup Language**. It is a readable text format for storing configuration.
 
 In HTTomo, YAML describes **which methods to run, in what order, and with which parameters**.
+
+
+::: {.fragment}
 
 - **Dashes (`-`)** introduce list items.
 - **Key–value pairs** define settings or parameters: `kernel_size: 3`
@@ -201,7 +204,10 @@ In HTTomo, YAML describes **which methods to run, in what order, and with which 
     dif: 1000
 ```
 
-## Reading/editing YAML {.smaller}
+:::
+
+
+## Reading/editing YAML {#editing_yaml}
 
 Use an editor such as [VS Code in your browser](https://vscode.dev/). Enable **Render Whitespace** to spot tabs and indentation.
 
@@ -218,21 +224,11 @@ Use an editor such as [VS Code in your browser](https://vscode.dev/). Enable **R
 
 ::: {.fragment}
 
-::: {.callout-warning style="font-size: 1.4em;"}
+::: {.callout-warning style="font-size: 1.2em;"}
 
-HTTomo does perform some checks of the YAML file, however, **valid YAML is not always a valid HTTomo pipeline:** a spelling error or incorrect nesting can parse successfully but fail HTTomo’s checks.
-
-:::
-
-
-
-::: {.callout-tip style="font-size: 1.4em;"}
-
-**Tip:** copy a method template, preserve its structure, and change one setting at a time.
+HTTomo does perform some checks of the YAML file, however, **valid YAML is not always a valid HTTomo pipeline:** a spelling error or incorrect nesting can parse successfully, but fail HTTomo’s checks.
 
 :::
-
-
 :::
 
 
@@ -643,44 +639,39 @@ Crop `detector_x` only when the sample is fully within the field of view. Otherw
 </div>
 
 
-## How to run HTTomo at Diamond {#how_to_run_httomo}
+## How to run HTTomo at Diamond {#how_to_run_httomo .smaller}
 
-1. SSH into the **Wilson cluster** using your `fedid` credentials
+1. Connect to **Wilson** using your `fedid`, then load the **latest** HTTomo version:
 
 ```bash
 ssh wilson
+module load httomo/latest
 ```
 
 ::: {.fragment}
-2. Load HTTomo module in a terminal:
+2. Define the workshop folder **once in your Wilson terminal**:
 
 ```bash
-module load httomo
+export HTTOMO_WORKSHOP=/dls/k11/data/2026/mg47440-2/processing/httomo-workshop
 ```
 
+Use `${HTTOMO_WORKSHOP}` in paths below. Repeat the export in each new terminal session.
 :::
 
 ::: {.fragment}
-3. Submit to the **Wilson cluster**:
+3. Submit your pipeline, using paths relative to the workshop folder:
 
 ```bash
-httomo_mpi input.nxs pipeline.yaml output_dir
+httomo_mpi "${HTTOMO_WORKSHOP}/data/input.nxs" \
+  "${HTTOMO_WORKSHOP}/pipelines/pipeline.yaml" \
+  "${HTTOMO_WORKSHOP}/output/${USER}/exercise_output"
 ```
 
+Replace `data/input.nxs` and `pipelines/pipeline.yaml` with your dataset and pipeline paths. `${USER}` is your login name and gives you a personal output location.
 :::
 
 ::: {.fragment}
-4. Tail the job to monitor the progress:
-
-```bash
-tail -f jobid
-```
-
-:::
-
-::: {.fragment}
-5. Inspect the results in the timestamped run folder inside `output_dir`.
-
+4. Check your job with `squeue -u "$USER"`. 
 :::
 
 ::: {.footer}
@@ -734,100 +725,56 @@ Your job uses the resources allocated to it.
 
 ## Tutorial Part I: Running HTTomo
 
-![](images/tutorial-run-dark.png){.nostretch width=70%}
+- First reconstruction using a supplied pipeline and synthetic data
+- Configuring the loader and selecting a detector preview
+- Pre-processing: dark/flat correction, negative log, outlier and stripe removal
+- Reconstruction: centre of rotation, padding, masking and filters
+- Rescaling and saving reconstructed images
+- Reading HTTomo logs and sweeping the centre of rotation
 
-## Exercise 1: a quick run test reconstruction
+![](images/tutorial-run-dark.png){.nostretch width=45%}
 
-### Achieve a successful completed run of HTTomo.
+## Exercise 1: a quick run test reconstruction {#exercise1}
 
-We will use a provided **small synthetic dataset** (`tomodata_synth.nxs`) and a **working GPU pipeline** bellow.
+### Initiate your first HTTomo run
 
-1. Copy provided pipeline bellow to your working directory.
-2. Inspect the input dataset in Dawn.
-3. Create output directory, e.g., `exercise1_output`.
-4. Perform your first reconstruction using the supplied pipeline and [How to run HTTomo](#how_to_run_httomo) directives.
+Following [How to run HTTomo at Diamond](#how_to_run_httomo):
 
-
-<div style="height: 400px; overflow-y: auto; font-size: 0.75em;">
-
-```yaml
-# --- Standard tomography loader for NeXus files. ---
-- method: standard_tomo
-  module_path: httomo.data.hdf.loaders
-  parameters:
-    data_path: auto
-    image_key_path: auto
-    rotation_angles: auto
-    preview:
-      detector_x:   # horizontal data previewing/cropping.
-        # when null, the full data dimension is used, i.e., no previewing
-        start: null
-        stop: null
-      detector_y:
-        start: null
-        stop: null
-    darks: null
-    flats: null
-# --- Removing unresponsive/dead pixels in the data, aka zingers. Use if sharp streaks are present in the reconstruction. To be applied before normalisation. ---
-- method: remove_outlier
-  module_path: httomolibgpu.misc.corr
-  parameters:
-    kernel_size: 3  # The size of the 3D neighbourhood surrounding the voxel. Odd integer.
-    dif: 1000 # A difference between the outlier value and the median value of neighbouring pixels.
-# --- Normalisation of projection data using collected flats/darks images. --- 
-- method: dark_flat_field_correction
-  module_path: httomolibgpu.prep.normalize
-  parameters:
-    flats_multiplier: 1.0
-    darks_multiplier: 1.0
-    upper_bound: null
-    lower_bound: null
-- method: minus_log
-  module_path: httomolibgpu.prep.normalize
-  parameters: {}
-# --- Method to remove stripe artefacts in the data that lead to ring artefacts in the reconstruction. --- 
-- method: remove_all_stripe
-  module_path: httomolibgpu.prep.stripe
-  parameters:
-    snr: 3.0
-    la_size: 61
-    sm_size: 21
-    dim: 1
-# --- Reconstruction method. ---
-- method: LPRec3d_tomobar
-  module_path: httomolibgpu.recon.algorithm
-  parameters:
-    center: null
-    detector_pad: false
-    filter_type: shepp
-    filter_freq_cutoff: 1.0
-    recon_size: null
-    recon_mask_radius: 0.95
-# --- Calculate global statistics on the reconstructed volume, required for data rescaling. ---
-- method: calculate_stats
-  module_path: httomo.methods
-  parameters: {}
-  id: statistics
-  side_outputs:
-    glob_stats: glob_stats
-# --- Rescaling the data using min/max obtained from `calculate_stats`. ---
-- method: rescale_to_int
-  module_path: httomolib.misc.rescale
-  parameters:
-    perc_range_min: 1.0
-    perc_range_max: 99.0
-    bits: 16
-    glob_stats: ${{statistics.side_outputs.glob_stats}}
-# --- Saving data into images. ---
-- method: save_to_images
-  module_path: httomolib.misc.images
-  parameters:
-    subfolder_name: images
-    axis: auto
-    file_format: tif  # `tif` or `jpeg` can be used.
-    asynchronous: true    
+```bash
+ssh wilson
+module load httomo/latest
+export HTTOMO_WORKSHOP=/dls/k11/data/2026/mg47440-2/processing/httomo-workshop
 ```
-</div>
+
+1. Use the small synthetic dataset `tomodata_synth.nxs`, you can inspect it in Dawn first. The data folder is:
+```bash
+"${HTTOMO_WORKSHOP}/data/"
+```
+2. Use the `exercise1.yaml` pipeline in: 
+```bash
+"${HTTOMO_WORKSHOP}/pipelines/"
+```
+3. Create your output directory with
+```bash
+mkdir "${HTTOMO_WORKSHOP}/output/${USER}"
+```
+
+## Exercise 1: a quick run test reconstruction {#exercise1_part2}
+
+4. Run HTTomo with all paths provided:
+```bash
+httomo_mpi "${HTTOMO_WORKSHOP}/data/tomodata_synth.nxs" \
+ "${HTTOMO_WORKSHOP}/pipelines/exercise1.yaml" \
+ "${HTTOMO_WORKSHOP}/output/${USER}/exercise1_output" --resource small
+```
+
+5. **Next:** check the run folder and inspect your reconstruction.
+
+::: {.callout-note style="font-size: 1.2em;"}
+
+Check that the user folder is created in step 3 of [Exercise 1](#exercise1) directions.
+
+:::
 
 ## First reconstruction: output files
 
@@ -836,14 +783,14 @@ Open the new **timestamped run folder** inside `exercise1_output`.
 | Find | What to do |
 |---|---|
 | `user.log` | Read the progress messages and check how the run ended. |
-| `first_reconstruction.yaml` | The YAML pipeline used for this run. |
+| `exercise1.yaml` | The YAML pipeline used for this run. |
 | Reconstruction saved as HDF5 file | Open the reconstructed dataset in an HDF5 viewer (DAWN). |
 | `debug.log` | More verbose logging to help diagnosing a problem. |
 | `httomo.o` | Slurm log file that follows `user.log`, and provide information about the job execution. |
 | `images16bit_tif` | TIFF images of the reconstructed volume, check with ImageJ |
 
 
-## Exercise 2: previewing data
+## Exercise 2: previewing the data
 
 ### Learn how to preview the data.
 
@@ -856,41 +803,62 @@ Following [previewing examples](#previewing-examples), modify the loader's `prev
 ![](images/preview-exercise-dark-no-yaml.png){.nostretch width=46%}
 
 
-## Exercise 3: configure the loader {#preview_lorentz .small}
+## Exercise 3: configure the loader {#preview_lorentz}
 
-### Deal with non-NXtomo-compliant datasets, i.e., helping the loader to locate the data in the file by providing explicit paths and other information. 
+:::: {.exercise3-layout}
+::: {.exercise3-instructions}
 
-1. Inspect [TomoBank Lorentz dataset](https://tomobank.readthedocs.io/en/latest/source/data/docs.data.lorentz.html) named as **`tomo_00088.h5`** in your workshop `data` folder. Visualise it in Dawn and check the dataset paths for projections, flats, darks.
+[**Read data without the NXTomo layout**]{.exercise3-heading}
 
-2. Fill the loader template provided bellow with the correct dataset paths for projections, flats and darks. 
+1. Open **`tomo_00088.h5`** ([TomoBank Lorentz dataset](https://tomobank.readthedocs.io/en/latest/source/data/docs.data.lorentz.html)) from the workshop `data` folder in **DAWN**.
+2. Find the dataset paths for **projections**, **darks** and **flats**.
+3. Fill in the three **`data_path`** entries in the template.
+4. Add dark/flat correction after the loader; save both steps as `exercise3.yaml`.
+5. Run HTTomo with `tomo_00088.h5` and `exercise3.yaml`.
 
-```{.yaml code-font-size="0.55em"}
+```{.yaml code-line-numbers="false"}
+- method: dark_flat_field_correction
+  module_path: httomolibgpu.prep.normalize
+  parameters:
+    flats_multiplier: 1.0
+    darks_multiplier: 1.0
+    upper_bound: null
+    lower_bound: null
+    clipping_warning: false
+  save_result: true
+```
+:::
+
+::: {.exercise3-template}
+```{.yaml code-line-numbers="false"}
 - method: standard_tomo
   module_path: httomo.data.hdf.loaders
   parameters:
-    data_path: # insert path to the projections dataset
-    image_key_path: null # no keys in the dataset
+    data_path: # projection dataset path
+    image_key_path: null
     rotation_angles:
-      user_defined: # explicit rotation angles
+      user_defined:
         start_angle: 0
         stop_angle: 179.876
         angles_total: 1500
     preview:
       detector_y:
         start: mid
-        start_offset : -25
+        start_offset: -25
         stop: mid
-        stop_offset : 25
+        stop_offset: 25
     darks:
-      file: input_data # points to the same input data file
-      image_key_path: null # no keys in the dataset
-      data_path: # insert path to the darks dataset
+      file: input_data
+      image_key_path: null
+      data_path: # dark dataset path
     flats:
       file: input_data
-      image_key_path: null # no keys in the dataset
-      data_path: # insert path to the flats dataset
+      image_key_path: null
+      data_path: # flat dataset path
     continuous_scan_subset: null
 ```
+:::
+::::
 
 ::: {.footer}
 [HTTomo real-data examples](https://diamondlightsource.github.io/httomo/howto/tutorial/real_data_example.html)
