@@ -307,3 +307,7 @@
   margin: 0;
 }
 .reveal #rescaling-range .rescaling-example figure { margin: 0; }
+
+.reveal #continuous-scan-subset pre { font-size: 22px; }
+.reveal #continuous-scan-subset pre code { max-height: none; line-height: 1.15; }
+.reveal #continuous-scan-subset .column p { text-align: left; }

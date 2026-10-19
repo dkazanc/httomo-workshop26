@@ -967,7 +967,7 @@ Parameters of `remove_outlier` method in `httomolibgpu.misc.corr`:
 
 ## Exercise 5: pre-processing (de-zingering) {#exercise5}
 
-1. Use synthethic dataset `tomodata_synth.nxs` to remove **outliers** from the projections, flats, and darks.
+1. Use synthethic dataset `tomodata_synth.nxs` to remove **outliers** from the projections, flats, and darks. Use key `auto` in the loader for synthethic dataset.
 
 2. Add HTTomolibGPU's [remove_outlier](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.misc.corr.html) template to your pipeline after the loader.
 
@@ -1033,7 +1033,9 @@ Over-correction can introduce artefacts.
 
 1. Use synthethic dataset `tomodata_synth.nxs` to remove **stripes** from the calibrated sinogram images.
 
-2. Use pipeline from [Exercise 5](#exercise5) and add [remove_all_stripe](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.prep.stripe.html) stripe removal to your pipeline after dezinger.
+2. Place **dezinger** after the loader.
+
+2. Add [remove_all_stripe](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.prep.stripe.html) to your pipeline after dezinger.
 
 3. Add save result for the **`remove_all_stripe`** method.
 
@@ -1259,12 +1261,10 @@ Example: [HTTomo auto-centering](https://diamondlightsource.github.io/httomo/how
 
 Use real data `lorentz_data.h5` to perform d/f correction, auto-centering and reconstruction.
 
-1. Use the pipeline from [Exercise 3](#exercise3). 
-
-Build a pipeline with the modified YAML [loader](#preview_lorentz).
-2. Add d/f correction and negative logarithm. 
-3. Add the `find_center_vo` method by using the [YAML template](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.recon.rotation.html) for it.
-4. Add the reconstruction method `FBP3d_tomobar` or `LPRec3d_tomobar` using provided [YAML template](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.recon.algorithm.html).
+1. Use the pipeline from [Exercise 3](#exercise3).
+Build a pipeline with the modified YAML loader.
+2. Add the `find_center_vo` method by using the [YAML template](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.recon.rotation.html) for it.
+3. Add negative logarithm and the reconstruction method `FBP3d_tomobar` or `LPRec3d_tomobar` using provided [YAML template](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.recon.algorithm.html).
 
 ::: {.callout-note}
 Note that `center` in `parameters` points to the [side output](#side-outputs) of the `find_center_vo` method by default.
@@ -1289,7 +1289,7 @@ Note that `center` in `parameters` points to the [side output](#side-outputs) of
 
 **`recon_mask_radius: 0.9`** applies a circular mask after reconstruction, setting values outside it to zero.
 
-**`recon_size: null`** change the size of the reconstruction in pixels. Use when the sample if well withing the field of view.
+**`recon_size: null`** select the output dimensions of the reconstructed image. Use when the sample if well withing the field of view.
 
 <div style="display: flex; gap: 12px; align-items: flex-start;">
 <div style="flex: 1; min-width: 0; text-align: center;"><img src="images/lprec_recon_no_pad.jpg" alt="No padding" style="width: 100%; height: 235px; object-fit: contain; margin: 0;"><p style="font-size: 20px; text-align: center;">No padding</p></div>
@@ -1603,12 +1603,12 @@ queues jobs and starts them when the requested resources become available.
 1. **Connect to the cluster:** `ssh wilson` with `fedid` and password.
 2. **Submit:** send your job to the queue with `httomo_mpi`.
 3. **Monitor:** check whether it is waiting or running (optional).
-4. **Tail:** tail the job with `tail -f <jobID>` 
+4. **Tail:** tail the job with `tail -f <path/to/httomo.o>` 
 5. **Inspect:** when it finishes, open the output and results.
 
 | Command | What it does |
 |---|---|
-| `tail -f <jobID>` | Tailing the submitted job. If nothing shows up after 30 seconds, then check the status of the job with `squeue` |
+| `tail -f <path/to/httomo.o>` | Tailing the submitted job. If nothing shows up after 30 seconds, then check the status of the job with `squeue` |
 | `squeue -u $USER` | Show your queued and running jobs. |
 | `scancel <jobID>` | Cancel one of your queued or running jobs. |
 | `sacct -j <jobID>` | Show job accounting, including completed jobs. |
@@ -1813,7 +1813,7 @@ consistent calibration. Apply correction before reconstruction.
 
 1. Use `tomographic_projections.hdf` dataset from the `dist_corr` folder.
 
-2. Configure loader using explicit paths to data, d/f (note that there are in the additional files) and provide user-defined angles: 
+2. Configure loader using explicit paths to data, d/f (note that there are in the additional files) and provide user-defined angles bellow.  Add vertical preview of 50 slices to save time.
 
 ```yaml
     rotation_angles:
@@ -1822,8 +1822,9 @@ consistent calibration. Apply correction before reconstruction.
         stop_angle: 180.0
         angles_total: 1801
 ```
+3. Add d/f correction
 
-3. Add [distortion correction](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.prep.alignment.html) method after the loader with the following coefficients: 
+4. Add [distortion correction](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.prep.alignment.html) method after the loader with the following coefficients: 
 
 <details>
 <summary>distortion_correction_proj_discorpy with coefficients</summary>
@@ -1847,9 +1848,9 @@ consistent calibration. Apply correction before reconstruction.
 ```
 </details>
 
-4. Add d/f correction, stripe removal, CoR finder method, negative log and recosntruction. Add vertical preview to save time. 
+5. Add stripe removal, CoR finder method, negative log and reconstruction.
 
-5. Compare reconstructions with and without distortion correction
+6. Compare reconstructions with and without distortion correction
 
 ## Phase contrast: Paganin filter {#paganin-filter .smaller}
 
@@ -2001,8 +2002,8 @@ Use the estimated **centre_of_rotation**
 - method: sino_360_to_180
   module_path: httomolibgpu.misc.morph
   parameters:
-    overlap: ${{centering360.side_outputs.overlap}}
-    side: ${{centering360.side_outputs.side}}
+    overlap: ${{centering.side_outputs.overlap}}
+    side: ${{centering.side_outputs.side}}
 
 - method: LPRec3d_tomobar
   module_path: httomolibgpu.recon.algorithm
@@ -2024,9 +2025,11 @@ Use the estimated **centre_of_rotation**
 
 2. Use a standard loader template with the option for `auto` keys, angles and data. Make a vertical preview of 50 slices. 
 
-3. Add `find_center_360` from [rotation templates](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.recon.rotation.html) and `sino_360_to_180` from [morph templates](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.misc.morph.html) into the pipeline. 
+3. Add d/f correction
 
-4. Add reconstruction and make sure the order is correct as shown in the [slide](#processing-360) above.
+4. Add `find_center_360` from [rotation templates](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.recon.rotation.html) and `sino_360_to_180` from [morph templates](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.misc.morph.html) into the pipeline. 
+
+5. Add negative log and reconstruction. Make sure the order is correct as shown in the [slide](#processing-360) above.
 
 ## Exercise 16: Sweep for the `overlap` parameter in 360° scan {#exercise16}
 
@@ -2153,6 +2156,63 @@ Run the pipeline using `--save-snapshots` to inspect stitching and reconstructio
 [Method templates](https://diamondlightsource.github.io/httomo/backends/templates.html)
 :::
 
+
+## 4D tomography: selecting one scan {#continuous-scan-subset .smaller}
+
+**4D = a sequence of 3D volumes over time:** $(x, y, z, t)$, for example while a sample heats, deforms or reacts.
+
+:::: {.columns}
+::: {.column width="47%"}
+
+**Several scans can share one data array**
+
+The stored projections may be concatenated along the first axis: **[frame, detector_y, detector_x]**. The file need not contain a four-dimensional array.
+
+**Example: 1,800 projections per scan**
+
+No interleaved dark/flat frames in these example ranges.
+
+| Time point | Frame range |
+|---|---|
+| $t_0$ | `0:1800` |
+| **$t_1$** | **`1800:3600`** |
+| $t_2$ | `3600:5400` |
+
+`continuous_scan_subset` selects **one scan for this run**. Repeat with a new range and output directory for each time point.
+
+:::
+::: {.column width="49%"}
+
+**Loader example: reconstruct the second scan**
+
+```{.yaml code-line-numbers="false"}
+- method: standard_tomo
+  module_path: httomo.data.hdf.loaders
+  parameters:
+    data_path: auto
+    image_key_path: auto
+    rotation_angles: auto
+    continuous_scan_subset:
+      start: 1800
+      stop: 3600
+    preview:
+      detector_y:
+        start: mid
+        start_offset: -25
+        stop: mid
+        stop_offset: 25
+    darks: null
+    flats: null
+```
+
+**Zero-based indices; stop excluded:** frames **1800–3599**. Detector preview still works; the subset replaces `preview.angles`.
+
+:::
+::::
+
+::: {.footer}
+[Continuous-scan subsets](https://diamondlightsource.github.io/httomo/howto/loading_data/continuous_scan_subset.html)
+:::
 
 <!--
 ####################################################
