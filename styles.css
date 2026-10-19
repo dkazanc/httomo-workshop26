@@ -288,3 +288,22 @@
 .reveal #preview_lorentz .exercise3-instructions div.sourceCode { margin: 12px 0 0; }
 .reveal #preview_lorentz .exercise3-instructions pre { margin: 0; font-size: 20px; }
 .reveal #preview_lorentz .exercise3-instructions pre code { padding: 14px; line-height: 1.12; max-height: none; }
+
+/* Compare scaling ranges without crowding the explanation slide. */
+.reveal #rescaling-range .rescaling-examples { margin-top: 24px; }
+.reveal #rescaling-range .rescaling-example {
+  display: grid;
+  grid-template-columns: 0.85fr 1.4fr;
+  align-items: center;
+  gap: 36px;
+  margin-bottom: 18px;
+}
+.reveal #rescaling-range .rescaling-example p { margin: 0; }
+.reveal #rescaling-range .rescaling-example img {
+  display: block;
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  margin: 0;
+}
+.reveal #rescaling-range .rescaling-example figure { margin: 0; }

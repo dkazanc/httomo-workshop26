@@ -803,19 +803,17 @@ Following [previewing examples](#previewing-examples), modify the loader's `prev
 ![](images/preview-exercise-dark-no-yaml.png){.nostretch width=46%}
 
 
-## Exercise 3: configure the loader {#preview_lorentz}
+## Exercise 3: configure the loader {#exercise3 .smaller}
 
-:::: {.exercise3-layout}
-::: {.exercise3-instructions}
+### Read data without the NXTomo layout
 
-[**Read data without the NXTomo layout**]{.exercise3-heading}
+:::: {.columns}
+::: {.column width="47%"}
 
-1. Open **`tomo_00088.h5`** ([TomoBank Lorentz dataset](https://tomobank.readthedocs.io/en/latest/source/data/docs.data.lorentz.html)) from the workshop `data` folder in **DAWN**.
-2. Find the dataset paths for **projections**, **darks** and **flats**.
+1. Open **`lorentz_data.h5`** ([TomoBank Lorentz dataset](https://tomobank.readthedocs.io/en/latest/source/data/docs.data.lorentz.html)) from the workshop `data` folder in **DAWN**.
+2. Find the dataset paths for **projections**, **darks** and **flats** (called **white** in this case).
 3. Fill in the three **`data_path`** entries in the template.
-4. Add dark/flat correction after the loader; save both steps as `exercise3.yaml`.
-5. Run HTTomo with `tomo_00088.h5` and `exercise3.yaml`.
-
+4. Add dark/flat correction after the loader and save the pipeline into `exercise3.yaml`.
 ```{.yaml code-line-numbers="false"}
 - method: dark_flat_field_correction
   module_path: httomolibgpu.prep.normalize
@@ -827,16 +825,18 @@ Following [previewing examples](#previewing-examples), modify the loader's `prev
     clipping_warning: false
   save_result: true
 ```
+5. [Run HTTomo](#how_to_run_httomo) with `lorentz_data.h5` and `exercise3.yaml`.
+6. Inspect the saved normalised data in **DAWN** (sinogram slicing). 
 :::
 
-::: {.exercise3-template}
+::: {.column width="47%"}
 ```{.yaml code-line-numbers="false"}
 - method: standard_tomo
   module_path: httomo.data.hdf.loaders
   parameters:
     data_path: # projection dataset path
-    image_key_path: null
-    rotation_angles:
+    image_key_path: null # as there are no keys
+    rotation_angles: # in degrees
       user_defined:
         start_angle: 0
         stop_angle: 179.876
@@ -866,7 +866,11 @@ Following [previewing examples](#previewing-examples), modify the loader's `prev
 
 ## Data pre-processing
 
-![](images/preprocessing-chapter-dark.png){.nostretch width=90%}
+- Dark/flat correction
+- Outliers removal (dezingering)
+- Stripes/ring removal 
+
+![](images/preprocessing-chapter-dark.png){.nostretch width=70%}
 
 ## Transmission data calibration and linearisation {#calibration-linearisation .smaller}
 
@@ -905,48 +909,16 @@ In the figure, $I$ and $I_0$ represent ideal intensities. For measured data, use
 :::
 ::::
 
-## Exercise 4: Pre-processing d/f correction {#exercise4 .small}
+## Exercise 4: Dark/flat field correction {#exercise4}
 
-::: {.columns}
-::: {.column width="48%"}
-### Finding and copying a method
+### Data callibration and linearisation
 
-1. Open the page with the [templates](https://diamondlightsource.github.io/httomo/backends/templates.html). It tracks the `latest` HTTomo development version; for a tagged release, use the matching [versioned downloads](https://diamondlightsource.github.io/httomo/pipelines/versioned_downloads.html).
-2. Select a library and a module, then find the method. Copy its **YAML block** or use **Download**.
-3. Paste into **YAML pipeline** after the loader. Keep method entries aligned.
-
-4. Edit parameters if needed, replace any `REQUIRED` values.
-
-:::
-::: {.column width="2%"}
-<!-- empty column to create gap -->
-:::
-::: {.column width="50%"}
-
-::: {.fragment}
-
-### Exercise 4: pre-processing
-
-1. From [HTTomolibgpu normalization](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.prep.normalize.html) module, paste these **after your loader**:
-
-```yaml
-# Existing loader stays above these methods.
-- method: dark_flat_field_correction
-  module_path: httomolibgpu.prep.normalize
-  parameters:
-    flats_multiplier: 1.0
-    darks_multiplier: 1.0
-    upper_bound: null
-    lower_bound: null
-
-- method: minus_log
-  module_path: httomolibgpu.prep.normalize
-  parameters: {}
-```
-2. Enable [saving a method result](https://diamondlightsource.github.io/httomo/howto/httomo_features/save_results.html) for **minus_log**.
-:::
-:::
-:::
+1. Use already created pipeline `exercise3.yaml` from [Exercise 3](#exercise3)
+2. Open the page with the [templates](https://diamondlightsource.github.io/httomo/backends/templates.html), find `minus_log` method of `httomolibgpu.prep.normalize` module.
+3. Copy paste the `minus_log` template to the end of your pipeline.
+4. Enable [saving a method result](https://diamondlightsource.github.io/httomo/howto/httomo_features/save_results.html) for **minus_log** and disable for `dark_flat_field_correction`.
+5. Run HTTomo with **`lorentz_data.h5`** data.
+6. Inspect the results in **DAWN**.
 
 ## Outliers: small pixel errors
 
@@ -958,16 +930,23 @@ In the figure, $I$ and $I_0$ represent ideal intensities. For measured data, use
 Unusually bright or dark pixels that differ sharply from their neighbours,
  often called **zingers**. They can produce streaks in a reconstruction.
 
+
+::: {.fragment}
+
 **How does a dezinger work?**
 
 Compare each value with the **local median**. Replace it only when the
  difference exceeds a threshold.
 
+Parameters of `remove_outlier` method in `httomolibgpu.misc.corr`:
+
 - `kernel_size`: the size of the neighbourhood.
 - `dif`: the threshold for replacement. A larger value makes the filter more selective.
-
 :::
-::: {.column width="52%"}
+:::
+::: {.column width="2%"}
+:::
+::: {.column width="50%"}
 
 **Projection with outliers**
 
@@ -992,9 +971,9 @@ Compare each value with the **local median**. Replace it only when the
 
 2. Add HTTomolibGPU's [remove_outlier](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.misc.corr.html) template to your pipeline after the loader.
 
-3. Add save result for **remove_outlier**.
+3. Add save result for the **`remove_outlier`** method.
 
-4. Tweak **`dif`** parameter to see the effect of dezinging. Do not make it too small, if zero, the method is equivalent to a median filter.
+4. Tweak **`dif`** parameter to see the effect of dezinging. Do not make it too small, if **`dif: 0`**, the method is equivalent to a median filter (each pixel will be filtered).
 
 ## Removing stripes and ring artefacts {.smaller}
 
@@ -1008,6 +987,8 @@ Reconstruction can turn these stripes into **rings around the rotation axis**.
 
 A **sinogram** shows one detector row across all projection angles.
 
+::: {.fragment}
+
 ### Basic approaches to stripe removal
 
 - **Equalise responses:** estimate and correct intensity differences between neighbouring detector positions, for example using sorting and median filtering.
@@ -1017,7 +998,10 @@ A **sinogram** shows one detector row across all projection angles.
 Methods can be combined when several stripe types occur together.
 
 :::
-::: {.column width="52%"}
+:::
+::: {.column width="2%"}
+:::
+::: {.column width="50%"}
 
 **Sinogram: before and after correction**
 
@@ -1051,19 +1035,21 @@ Over-correction can introduce artefacts.
 
 2. Use pipeline from [Exercise 5](#exercise5) and add [remove_all_stripe](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.prep.stripe.html) stripe removal to your pipeline after dezinger.
 
-3. Add save result for **remove_all_stripe**.
+3. Add save result for the **`remove_all_stripe`** method.
 
-4. Inspect the results and compare the sinograms before and after de-striping.
+4. Tweak some parameters like `snr` and `la_size` to see if there are any effect. 
+
+5. Inspect the results and compare the sinograms before and after de-striping.
 
 
-## Reconstruction in HTTomo {.smaller}
+## Reconstruction in HTTomo {}
 
 **Reconstruction estimates the sample's internal structure from projections measured at many angles.**
 
 ![](images/reconstruction-introduction-dark.png){.nostretch width=90% height=430px style="object-fit: contain;" fig-alt="Many projection measurements and their angles are combined by a reconstruction algorithm to recover internal slices, which form a 3D volume."}
 
 - **Inputs:** corrected and pre-processed projections, rotation angles and the centre of rotation.
-- **In your YAML:** a reconstruction method, such as `FBP3d_tomobar` or `LPRec3d_tomobar` should be added.
+- **In your YAML:** a reconstruction method, such as, `FBP3d_tomobar` or `LPRec3d_tomobar` should be added.
 - **Output:** reconstructed slices forming a volume you can inspect and analyse.
 
 ::: {.notes}
@@ -1105,7 +1091,11 @@ Compute the analytical reconstruction using an inversion formula:
 **Usually faster**, with fewer settings to tune.
 
 :::
-::: {.column width="52%"}
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="50%"}
 
 ::: {.fragment}
 ### Iterative methods
@@ -1159,7 +1149,7 @@ All methods listed use **`module_path: httomolibgpu.recon.algorithm`**.
 ::: {.column width="50%"}
 
 ::: {style="text-align: center;"}
-![](images/CoR-dark.png){.nostretch height=450px fig-alt="Parallel-beam geometry showing the rotation axis projected onto the detector and its offset from the detector centre."}
+![](images/CoR-dark.png){.nostretch height=470px fig-alt="Parallel-beam geometry showing the rotation axis projected onto the detector and its offset from the detector centre."}
 
 :::
 
@@ -1189,7 +1179,7 @@ The offset $d$ measures its displacement from the detector centre. Estimate the 
 [Details on CoR](https://diamondlightsource.github.io/httomo/howto/httomo_features/centering.html)
 :::
 
-## Finding the centre of rotation using the N. Vo method {#cor-search}
+## Finding the centre of rotation using N. Vo method {#cor-search}
 
 <video data-autoplay loop muted playsinline controls preload="auto" poster="images/cor-search-poster.png" style="display:block; width:90%; margin:0 auto;">
 <source src="images/cor-search.mp4" type="video/mp4">
@@ -1213,7 +1203,7 @@ A [side output](https://diamondlightsource.github.io/httomo/howto/httomo_feature
 Example: [HTTomo auto-centering](https://diamondlightsource.github.io/httomo/howto/httomo_features/centering.html#auto-centering) produces a **centre-of-rotation value** that reconstruction uses automatically.
 
 :::: {.columns}
-::: {.column width="55%"}
+::: {.column width="52%"}
 
 ### Using side outputs in YAML
 
@@ -1244,6 +1234,8 @@ Example: [HTTomo auto-centering](https://diamondlightsource.github.io/httomo/how
 ```
 
 :::
+::: {.column width="2%"}
+:::
 ::: {.column width="45%"}
 
 ### How the reference works
@@ -1257,23 +1249,25 @@ Example: [HTTomo auto-centering](https://diamondlightsource.github.io/httomo/how
 3. **Use it as a parameter**  
    `${{…}}` tells HTTomo to resolve the reference at runtime and supply the calculated value to `center`.
 
-::: {.callout-note}
-**Method order matters:** place auto-centering before reconstruction but after preprocessing (e.g., d/f correction).
+::: {.callout-note style="font-size: 1.2em;"}
+**Method order matters:** place auto-centering before reconstruction but after d/f correction.
 :::
 :::
 ::::
 
 ## Exercise 8: reconstruction with auto-centering {#exercise8 .small}
 
-Use real data `tomo_00088.h5` to perform d/f correction, auto-centering and reconstruction.
+Use real data `lorentz_data.h5` to perform d/f correction, auto-centering and reconstruction.
 
-1. Build a pipeline with the modified YAML [loader](#preview_lorentz).
+1. Use the pipeline from [Exercise 3](#exercise3). 
+
+Build a pipeline with the modified YAML [loader](#preview_lorentz).
 2. Add d/f correction and negative logarithm. 
 3. Add the `find_center_vo` method by using the [YAML template](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.recon.rotation.html) for it.
 4. Add the reconstruction method `FBP3d_tomobar` or `LPRec3d_tomobar` using provided [YAML template](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.recon.algorithm.html).
 
 ::: {.callout-note}
-Note that `center` in `parameters` points to the side output of the `find_center_vo` method by default.
+Note that `center` in `parameters` points to the [side output](#side-outputs) of the `find_center_vo` method by default.
 ```{.yaml code-line-numbers="2"}
   parameters:
     center: ${{centering.side_outputs.centre_of_rotation}}
@@ -1291,9 +1285,11 @@ Note that `center` in `parameters` points to the side output of the `find_center
 
 ### Padding and masking (relevant to all methods)
 
-**`detector_pad: true`** extends both horizontal detector edges before reconstruction to reduce boundary and halo artefacts.
+**`detector_pad: true`** extends both horizontal detector edges before reconstruction to reduce boundary and halo artefacts in the reconstruction.
 
 **`recon_mask_radius: 0.9`** applies a circular mask after reconstruction, setting values outside it to zero.
+
+**`recon_size: null`** change the size of the reconstruction in pixels. Use when the sample if well withing the field of view.
 
 <div style="display: flex; gap: 12px; align-items: flex-start;">
 <div style="flex: 1; min-width: 0; text-align: center;"><img src="images/lprec_recon_no_pad.jpg" alt="No padding" style="width: 100%; height: 235px; object-fit: contain; margin: 0;"><p style="font-size: 20px; text-align: center;">No padding</p></div>
@@ -1328,59 +1324,60 @@ Masking hides the outer region; it does not repair the data there.
 
 ## Exercise 9: changing reconstruction parameters {#exercise9 .small}
 
-1. Based on pipeline from [Exercise 8](#exercise8), change the reconstruction parameters by setting: 
+1. Based on pipeline from [Exercise 8](#exercise8), change the reconstruction parameters and inspect the differences: 
 
 ```{.yaml}
-    detector_pad: true
-    recon_mask_radius: 2.0
+    detector_pad: true # false
+    recon_mask_radius: 2.0 # 0.9 is default
+    recon_size: null # set to an integer, e.g., 500
 ```
 
 ## Why rescale data before saving images?
 
 **Rescaling maps floating-point values into an integer image range.**
 
-:::: {.columns}
-::: {.column width="50%"}
-
-### What does it achieve?
-
-- **Compatible image output:** choose unsigned 8-, 16- or 32-bit values with `bits`.
-- **Smaller data:** fewer bits per pixel reduce uncompressed storage.
-- **Control contrast:** map a selected input range across the available grey levels.
+- **Choose the image bit depth:** unsigned 8-, 16- or 32-bit values with `bits`.
+- **Reduce storage:** fewer bits per pixel mean smaller uncompressed images.
+- **Control contrast:** map a selected intensity range across the available grey levels.
 
 ::: {.fragment}
-**`perc_range_min` / `perc_range_max`** select percentages of the minimum-to-maximum intensity range, **not histogram percentiles**.
 
-Use `rescale_to_int` before `save_to_images`: rescaling alone does not save images.
-:::
-:::
+**Reconstruction → `rescale_to_int` → `save_to_images`**
 
-::: {.column width="2%"}
-<!-- empty column to create gap -->
+Rescaling prepares the image values; the saving method writes the files.
 :::
 
-::: {.column width="48%"}
+::: {.footer}
+[HTTomolibGPU rescale_to_int](https://diamondlightsource.github.io/httomolibgpu/reference/methods_list/rescale/rescale_to_int.html)
+:::
 
-### Same projection, different scaling
+## Choosing the rescaling range {#rescaling-range}
 
+`perc_range_min` and `perc_range_max` select **percentages of the minimum-to-maximum intensity range**, not histogram percentiles.
+
+:::: {.rescaling-examples}
+::: {.rescaling-example}
 **0–100%: full input range**
 
-![](images/rescale_to_int_proj_0_to_100.png){.nostretch width=90% height=100px style="object-fit: contain;" fig-alt="Projection rescaled using the full input intensity range."}
+![](images/rescale_to_int_proj_0_to_100.png){.nostretch fig-alt="Projection rescaled using the full input intensity range."}
+:::
 
+::: {.rescaling-example}
 **10–90%: improved contrast in this example**
 
-![](images/rescale_to_int_proj_10_to_90.png){.nostretch width=90% height=100px style="object-fit: contain;" fig-alt="Projection rescaled using 10 to 90 percent of its intensity range."}
+![](images/rescale_to_int_proj_10_to_90.png){.nostretch fig-alt="The same projection rescaled using 10 to 90 percent of its intensity range."}
+:::
 
+::: {.rescaling-example}
 **30–70%: excessive clipping loses detail**
 
-![](images/rescale_to_int_proj_30_to_70.png){.nostretch width=90% height=100px style="object-fit: contain;" fig-alt="Projection with detail lost through an overly narrow scaling range."}
-
+![](images/rescale_to_int_proj_30_to_70.png){.nostretch fig-alt="The same projection with detail lost through an overly narrow scaling range."}
 :::
 ::::
 
-::: {.callout-warning}
-**Keep the original floating-point reconstruction for quantitative analysis.**
-Integer conversion loses precision; values outside the chosen range are clipped.
+::: {.callout-warning style="font-size: 1.4em;"}
+Keep the original **floating-point reconstruction** for quantitative analysis.
+Integer conversion loses precision; values outside the selected range are clipped.
 :::
 
 ::: {.footer}
@@ -1390,24 +1387,27 @@ Integer conversion loses precision; values outside the chosen range are clipped.
 
 ## Exercise 10: saving images {#exercise10 .small}
 
-Adding data rescaling and image saving to pipelines from [Exercise 9](#exercise9).
+Adding data rescaling and image saving to pipelines from [Exercise 8](#exercise8).
 
 **After** the reconstruction step add the following YAML code: 
 
 ```yaml
+# calculating statistics globally (min/max)
 - method: calculate_stats
   module_path: httomo.methods
   parameters: {}
   id: statistics
   side_outputs:
     glob_stats: glob_stats
+# rescaling data
 - method: rescale_to_int
   module_path: httomolib.misc.rescale
   parameters:
-    perc_range_min: 1.0
-    perc_range_max: 99.0
-    bits: 16
+    perc_range_min: 1.0  # percentage min
+    perc_range_max: 99.0 # percentage max
+    bits: 16 # 8 or 32
     glob_stats: ${{statistics.side_outputs.glob_stats}}
+# saving rescaled images
 - method: save_to_images
   module_path: httomolib.misc.images
   parameters:
@@ -1444,10 +1444,13 @@ These methods are the CPU methods and accessed from `httomo.methods` and `httomo
 :::
 ::: {.column width="67%"}
 
+
+::: {.fragment}
+
 ### Reading the sections
 
 1. **`Pipeline has been separated into N sections`**   HTTomo groups methods into [sections](#sections) that process data blocks.
-2. **Loader runs first, outside the sections.**   It loads data in projection `pattern`, which the first section also uses.
+2. **Loader runs first, outside the sections.**   It loads data in projection `pattern` (see [reslice](#reslice)), which the first section also uses.
 3. **`Section N with the following methods`**   The listed methods run sequentially on each block. The section processes all its input before the next section starts.
 4. **`Finished processing the last block`**   The current section has finished. Another section may follow.
 
@@ -1456,12 +1459,23 @@ These methods are the CPU methods and accessed from `httomo.methods` and `httomo
 :::
 
 :::
+:::
 ::::
 
 ::: {.footer}
 [Interpret logs in HTTomo](https://diamondlightsource.github.io/httomo/howto/interpret_logger.html)
 :::
 
+## {#sections}
+
+![](images/httomo_gpu_section.svg){
+  width=100%
+  fig-alt="HTTomo GPU section"
+}
+
+::: {.footer}
+[More on sections](https://diamondlightsource.github.io/httomo/introduction/concepts/sections.html)
+:::
 
 ## Sweeping functionality {#sweeping .small}
 
@@ -1485,7 +1499,7 @@ Parameter sweeping is useful when automatic estimation fails or is unavailable. 
 
 ### HTTomo feature
 
-Parameter sweeping uses a separate runner in HTTomo, designed for debugging and parameter tuning rather than high-throughput processing.
+Parameter sweeping uses a separate runner in HTTomo, designed for debugging and parameter tuning rather than high-throughput processing. No changes from the user perspective. The users run **sweep** pipelines excactly the same as HT pipelines.
 :::
 :::
 ::: {.column width="45%"}
@@ -1541,13 +1555,14 @@ size: !Sweep
 :::
 ::: {.column width="50%"}
 
+::: {.fragment}
 ### Setup and results
 
 - Define **one sweep per pipeline**.
 - Use loader `preview` to select few vertical slices.
-- HTTomo saves sweep results as images **automatically**. No image-saving method is needed after the sweep.
+- HTTomo saves sweep results as images **automatically**. No image-saving or rescaling methods are needed after the sweep.
 - Each trial contributes its **middle slice** to the output, stacked along the middle dimension.
-
+:::
 :::
 ::::
 
@@ -1559,18 +1574,20 @@ size: !Sweep
 
 Perform a **sweep** run for the [center of rotation](#cor_estimation) parameter using the YAML syntax [provided](#sweep_syntax). 
 
-1. Use real data `tomo_00088.h5` and the pipeline from [Exercise 9](#exercise9). Note that rescaling and image saving are not needed when `sweep` is used. 
+1. Use real data **`lorentz_data.h5`** and the pipeline from [Exercise 8](#exercise8), but remove `find_center_vo` method from it. Note that rescaling and image saving from [Exercise 10](#exercise10) are not needed when `sweep` is used. 
 
-2. Add a `!Sweep` or `!SweepRange` to the `center` parameter in the reconstruction method. It is recommended to sweep around 1200 pixels, which is the approximate centre of the detector.
+2. Add the `!Sweep` or `!SweepRange` tag to the `center` parameter in the reconstruction method. It is recommended to sweep around 1200 pixels, which is the approximate centre of the detector.
 
-3. Inspect the sequence of images produced by the sweep. Choose a suitable value for the CoR parameter.
+3. Inspect the sequence of images produced by the sweep run. Choose visually a more suitable value for the CoR parameter.
+
+4. Compare it with the automatically found value of the [Exercise 8](#exercise8). You can find it in the logs.
 
 ## Tutorial II:  running end-to-end pipelines on Diamond HPC 
 
 - Cluster configuration and job submission at Diamond
 - Running full pipelines for 180 degree rotation scans
 - Distortion correction and phase contrast pre-processing
-- Introduction to 360 extended (aka doulbe) field of view DFoV scans
+- Introduction to 360 extended (aka double) field of view DFoV scans
 - Running full pipelines for 360 degree extended field of view scans
 - Continuous (4D) in-situ scans
 
@@ -1583,14 +1600,15 @@ queues jobs and starts them when the requested resources become available.
 
 ### A typical workflow
 
-1. **Connect to cluster:** `ssh wilson` with `fedid` and password.
-2. **Submit:** send your job to the queue.
-3. **Monitor:** check whether it is waiting or running.
-4. **Inspect:** when it finishes, open the output and results.
+1. **Connect to the cluster:** `ssh wilson` with `fedid` and password.
+2. **Submit:** send your job to the queue with `httomo_mpi`.
+3. **Monitor:** check whether it is waiting or running (optional).
+4. **Tail:** tail the job with `tail -f <jobID>` 
+5. **Inspect:** when it finishes, open the output and results.
 
 | Command | What it does |
 |---|---|
-| `sbatch jobScript` | Submit a job script and return a job ID. **HTTomo** performs cluster submission for you with `httomo_mpi` using `sbatch` inside the Dimtools software. |
+| `tail -f <jobID>` | Tailing the submitted job. If nothing shows up after 30 seconds, then check the status of the job with `squeue` |
 | `squeue -u $USER` | Show your queued and running jobs. |
 | `scancel <jobID>` | Cancel one of your queued or running jobs. |
 | `sacct -j <jobID>` | Show job accounting, including completed jobs. |
@@ -1604,31 +1622,34 @@ queues jobs and starts them when the requested resources become available.
 ### Using four NVIDIA RTX PRO 6000 Blackwell GPUs
 
 ![Source: Kazantsev et al., manuscript in preparation *"High-throughput GPU tomographic software HTTomo for high-performance computing at Diamond Light Source"*.](images/blackwell4_208607_part1.png){
-  width=100%
+  .nostretch
+  width=90%
   fig-alt="Blackwell 4 GPUs run"
-  fig-align="left"
+  fig-align="center"
 }
 
 ## HPC processing - multinode
 
 ![Source: Kazantsev et al., manuscript in preparation *"High-throughput GPU tomographic software HTTomo for high-performance computing at Diamond Light Source"*.](images/httomo-v100-multinode-performance.png){
-  width=100%
+  .nostretch
+  width=80%
   fig-alt="V100 multinode"
-  fig-align="left"
+  fig-align="center"
 }
 
 ## Exercise 12: Building a full pipeline {#exercise12 .small}
 
-1. Build the full pipeline for the real data `119647.nxs` using the YAML templates provided in the previous exercises. Include pre-processing steps, auto-centering,reconstruction steps, rescaling data and saving into tiffs.
+1. Build the full pipeline for the real data `sandstone.nxs`. 
 
-2. Note that this data follows NXTomo conventions, so you can use the `auto` keyword in the loader, see more about the [loader](#loader).
+2. Include previously discussed pre-processing (dezingering, stripe removal), auto-centering, reconstruction steps, rescaling data and saving into tiffs.
 
-3. To avoid long processing times, you can use the `preview` option in the loader to select a hundred of vertical slices.
+3. Note that this data follows NXTomo conventions, so you can use the `auto` keyword in the loader, see more about the [loader](#loader).
 
-4. You can also switch off saving the resconstructed image into HDF5 file with `save_result: false` added.
+4. To avoid long processing times, you can use the `preview` option in the loader to select a **hundred** of vertical slices in the middle of the detector.
 
+5. You can also switch off the saving of the resconstructed image into HDF5 file with `save_result: false` added.
 
-## Distortion correction: restoring projection geometry {.smaller}
+## Distortion correction: minimising optical distortions {.smaller}
 
 ![](images/discorpy-distortion-mapping.jpg){.nostretch width=90% height=310px fig-alt="Discorpy example: a distorted dot grid on the right maps to an undistorted grid with straight rows and columns on the left." style="object-fit: contain;"}
 
@@ -1718,7 +1739,7 @@ The supplied figure images are reproduced without altering their pixels.
 ## Applying distortion calibration in HTTomo {.smaller}
 
 :::: {.columns}
-::: {.column width="49%"}
+::: {.column width="48%"}
 
 **Use the calibration file for your detector setup:**
 
@@ -1737,7 +1758,10 @@ The text file contains **`xcenter`, `ycenter`, then `factor_0`, `factor_1`, …*
 - **Coefficients:** fitted weights controlling radial resampling. Obtain the **backward-model** file from Discorpy calibration.
 
 :::
-::: {.column width="51%"}
+::: {.column width="2%"}
+:::
+
+::: {.column width="48%"}
 
 **What do the coefficients do?**
 
@@ -1787,9 +1811,9 @@ consistent calibration. Apply correction before reconstruction.
 
 ## Exercise 13: Apply distortion correction {#exercise13 .small}
 
-1. Use dataset from `distortion_correction` folder. Note that there are external flats and darks files in the folder.
+1. Use `tomographic_projections.hdf` dataset from the `dist_corr` folder.
 
-2. Configure loader using explicit paths to data, d/f and provide user-defined angles: 
+2. Configure loader using explicit paths to data, d/f (note that there are in the additional files) and provide user-defined angles: 
 
 ```yaml
     rotation_angles:
@@ -1799,7 +1823,7 @@ consistent calibration. Apply correction before reconstruction.
         angles_total: 1801
 ```
 
-3. Add [distortion correction](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.prep.alignment.html) method after loader with the following coefficients: 
+3. Add [distortion correction](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.prep.alignment.html) method after the loader with the following coefficients: 
 
 <details>
 <summary>distortion_correction_proj_discorpy with coefficients</summary>
@@ -1823,11 +1847,11 @@ consistent calibration. Apply correction before reconstruction.
 ```
 </details>
 
-4. Add d/f correction, stripe removal, CoR finder method, negative log and recosntruction. Add vertical preview if needed. 
+4. Add d/f correction, stripe removal, CoR finder method, negative log and recosntruction. Add vertical preview to save time. 
 
-5. Compared reconstructions with and without distortion correction
+5. Compare reconstructions with and without distortion correction
 
-## Phase contrast: the Paganin filter {#paganin-filter .smaller}
+## Phase contrast: Paganin filter {#paganin-filter .smaller}
 
 Propagation creates bright/dark fringes at material boundaries. **Paganin phase retrieval** suppresses these fringes and noise before reconstruction, assuming an approximately **single-material** sample.
 
@@ -1898,7 +1922,7 @@ the absorption index. Their ratio depends on material and beam energy.
 3. Compare to the result of [Exercise 13](#exercise13). 
 
 
-## Why collect a 360° scan? {#why-360-scans .smaller}
+## A 360° scan, why we need it? {#why-360-scans .smaller}
 
 **The sample may be wider than the detector’s field of view.** Moving the rotation axis towards one edge of the detector lets opposite views cover complementary parts of the sample.
 
@@ -1931,7 +1955,7 @@ exposures. This simple comparison assumes a static sample and parallel beams.
 
 ## 360° to 180° scans conversion  {#360scan-video}
 
-<video data-autoplay loop muted playsinline controls preload="auto" poster="videos/360-to-180-poster.png" style="display:block; width:90%; margin:0 auto;">
+<video data-autoplay loop muted playsinline controls preload="auto" poster="videos/360-to-180-poster.png" style="display:block; width:80%; margin:0 auto;">
 <source src="videos/360-to-180-tomography.mp4" type="video/mp4">
 </video>
 
@@ -1994,17 +2018,17 @@ Use the estimated **centre_of_rotation**
 :::
 
 
-## Exercise 15: Perform 360 degrees scan reconstruction {#exercise15}
+## Exercise 15: Perform 360° scan reconstruction {#exercise15}
 
-1. Use data from the folder **360scans**, scan `163888.nxs`.
+1. Use data `bio_sample.nxs` from the folder **360**.
 
-2. Use a standard loader template and provide all paths to data **explicitly**. Make a vertical preview of 50 slices. 
+2. Use a standard loader template with the option for `auto` keys, angles and data. Make a vertical preview of 50 slices. 
 
 3. Add `find_center_360` from [rotation templates](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.recon.rotation.html) and `sino_360_to_180` from [morph templates](https://diamondlightsource.github.io/httomo-backends/api/httomolibgpu.misc.morph.html) into the pipeline. 
 
 4. Add reconstruction and make sure the order is correct as shown in the [slide](#processing-360) above.
 
-## Exercise 16: Sweep for `overlap` parameter in 360 degrees scan {#exercise16}
+## Exercise 16: Sweep for the `overlap` parameter in 360° scan {#exercise16}
 
 1. Using [parameter-sweeping functionality](#sweeping) perform a `!SweepRange` search for the overlap parameter.
 
@@ -2018,10 +2042,10 @@ Use the estimated **centre_of_rotation**
       start: 1
       stop: 1300
       step: 10
-    side: left # OR right, needs checking 
+    side: left # OR right, needs checking!
 ```
 
-3. Find the `overlap` parameter manually by assessing the overlap area in stitched sinograms. Use ImageJ. 
+3. Find the `overlap` parameter choosing the correct `side` manually by assessing the overlap area in the stitched sinogram. Use ImageJ. 
 
 4. Substitute the found value for `overlap` into parameters of `sino_360_to_180`, add negative log and a reconstruction method with `center: 2560`.
 
@@ -2118,7 +2142,7 @@ Build pipeline from scratch using the methods bellow. Use scan **191450.nxs**.
 
 1. **Loader:** use `auto` for NeXus paths and angles. Do the vertical preview to avoid longer runs, e.g., 200 slices. 
 2. **Corrections:** copy the supplied distortion centre and coefficients. Set outlier and stripe-removal parameters from the reference YAML.
-3. **Phase retrieval:** use **0.325 µm, 0.06 m, 27 keV**, with `ratio_delta_beta: 10`. **Do not add `minus_log`.**
+3. **Phase retrieval:** use **3 µm, 0.1 m, 15 keV**, with `ratio_delta_beta: 200`. **Do not add `minus_log`.**
 4. **Output:** connect `calculate_stats` to `rescale_to_int`; use **16-bit**, percentages **1–99**, and save **TIFFs**.
 
 Run the pipeline using `--save-snapshots` to inspect stitching and reconstruction.
@@ -2151,16 +2175,6 @@ Run the pipeline using `--save-snapshots` to inspect stitching and reconstructio
 [Benefits of using Open MPI in HTTomo](#openmpi-benefits)
 :::
 
-## {#sections}
-
-![](images/httomo_gpu_section.svg){
-  width=100%
-  fig-alt="HTTomo GPU section"
-}
-
-::: {.footer}
-[More on sections](https://diamondlightsource.github.io/httomo/introduction/concepts/sections.html)
-:::
 
 ## 
 
@@ -2174,18 +2188,19 @@ Run the pipeline using `--save-snapshots` to inspect stitching and reconstructio
 [Enabling own methods in HTTomo](#own_methods)
 :::
 
+-->
 
 ##
 
 ![](images/httomo_features.svg){
-  width=100%
+  .nostretch
+  width=90%
   fig-alt="HTTomo features"
 }
 
 ::: {.footer}
 [HTTomo features](https://diamondlightsource.github.io/httomo/howto/httomo_features.html)
 :::
--->
 
 ## HTTomo data-management directions {#gpu_data_management}
 
