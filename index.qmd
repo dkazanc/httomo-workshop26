@@ -426,13 +426,20 @@ Browse the file hierarchy, inspect metadata, then plot a dataset.
 
 ## Using Dawn to visualise the data
 
-A sinogram view in [DAWN](https://dawnsci.org/) of a synthetic dataset packed into a NeXus file `tomodata_synth.nxs`.
+To run DAWN at Diamond do:
+```bash
+module load dawn
+dawn
+```
 
 ![](images/dawn_view.png){
   .nostretch
-  width=70%
+  width=50%
+  fig-align="center"
   fig-alt="Synthetic tomography data in DAWN"
 }
+
+A sinogram view in [DAWN](https://dawnsci.org/) of a synthetic dataset (`tomodata_synth.nxs`) packed into a NeXus file.
 
 
 ## Data loading and previewing in HTTomo
