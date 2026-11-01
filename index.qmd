@@ -53,6 +53,29 @@ author:
 [Published agenda](https://www.diamond.ac.uk/Home/Events/2026/Tomography-Workshop-HTTomo.html)
 :::
 
+## Access to data and cluster computing resources
+
+To ensure that all participants can run HTTomo on Diamond's cluster and have access to the necessary data please login to workstations and open a terminal.
+
+:::{.callout-note style="font-size: 1.5em;"}
+For Windows users, please use the NoMachine client to connect to a Linux node first. One can create a new connection with `Host: nx.diamond.ac.uk`.
+:::
+
+Then `ssh` into the `wilson` cluster using your Diamond credentials (fedid and password):
+
+```bash
+ssh wilson
+```
+
+The visit folder for this workshop is:
+`/dls/k11/data/2026/mg47440-2/processing/httomo-workshop`
+
+::: {style="text-align: center; margin: 1.2em 0; padding: 0.7em 0; border-top: 2px solid #66c2d7; border-bottom: 2px solid #66c2d7; font-size: 1.2em;"}
+Open this presentation in your browser: [https://diamondlightsource.github.io/httomo-workshop-2026/](https://diamondlightsource.github.io/httomo-workshop-2026/)
+:::
+
+
+
 
 ## Workshop objectives
 
@@ -311,7 +334,7 @@ A **method template** is a YAML snippet you can copy into your pipeline.
 
 **Demo example:** Find `remove_outlier` in `httomolibgpu.misc.corr`.
 
-## A general structure of complete pipeline
+## A general structure of a complete pipeline
 
 A pipeline combines individual methods into **one ordered YAML list**.
 
@@ -671,7 +694,7 @@ Use `${HTTOMO_WORKSHOP}` in paths below. Repeat the export in each new terminal 
 ```bash
 httomo_mpi "${HTTOMO_WORKSHOP}/data/input.nxs" \
   "${HTTOMO_WORKSHOP}/pipelines/pipeline.yaml" \
-  "${HTTOMO_WORKSHOP}/output/${USER}/exercise_output"
+  "${HTTOMO_WORKSHOP}/output/${USER}/exercise_output" --reservation httomo_workshop
 ```
 
 Replace `data/input.nxs` and `pipelines/pipeline.yaml` with your dataset and pipeline paths. `${USER}` is your login name and gives you a personal output location.
@@ -772,7 +795,7 @@ mkdir "${HTTOMO_WORKSHOP}/output/${USER}"
 ```bash
 httomo_mpi "${HTTOMO_WORKSHOP}/data/tomodata_synth.nxs" \
  "${HTTOMO_WORKSHOP}/pipelines/exercise1.yaml" \
- "${HTTOMO_WORKSHOP}/output/${USER}/exercise1_output" --resource small
+ "${HTTOMO_WORKSHOP}/output/${USER}/exercise1_output" --resource small --reservation httomo_workshop
 ```
 
 5. **Next:** check the run folder and inspect your reconstruction.
