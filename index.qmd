@@ -70,7 +70,7 @@ The visit folder for this workshop is:
 `/dls/k11/data/2026/mg47440-2/processing/httomo-workshop`
 
 ::: {style="text-align: center; margin: 1.2em 0; padding: 0.7em 0; border-top: 2px solid #66c2d7; border-bottom: 2px solid #66c2d7; font-size: 1.2em;"}
-Open this presentation in your browser: [https://diamondlightsource.github.io/httomo-workshop-2026/](https://diamondlightsource.github.io/httomo-workshop-2026/)
+Open this presentation in your browser: [https://dkazanc.github.io/httomo-workshop26](https://dkazanc.github.io/httomo-workshop26)
 :::
 
 
