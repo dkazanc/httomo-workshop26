@@ -74,7 +74,54 @@ Open this presentation in your browser: [https://dkazanc.github.io/httomo-worksh
 :::
 
 
+## Linux Bash essentials {#linux-bash-essentials}
 
+After `ssh wilson`, type commands in the terminal and press **Enter**. Start in the workshop folder:
+
+```{.bash code-line-numbers="false"}
+cd /dls/k11/data/2026/mg47440-2/processing/httomo-workshop
+```
+
+:::: {.columns}
+::: {.column width="46%"}
+
+### Navigating folders
+
+| Command | What it does |
+|:---|:---|
+| `pwd` | Show the current folder |
+| `ls -lh` | List files and their sizes |
+| `cd data` | Enter the `data` folder |
+| `cd ..` | Go up one folder |
+| `cd ~` | Go to your home folder |
+| `cd -` | Return to the previous folder |
+
+`/` starts an absolute path, `.` means here, `..` means the parent folder and `~` means home.
+
+:::
+::: {.column width="54%"}
+
+### Workshop files
+
+Run these from the workshop folder. `$USER` is your login name.
+
+```{.bash code-line-numbers="false"}
+# Create your own output folder
+mkdir -p "output/$USER"
+# Copy a pipeline into your folder
+cp pipelines/exercise1.yaml "output/$USER/"
+# Edit your copy (Ctrl+O, Enter saves; Ctrl+X exits)
+nano "output/$USER/exercise1.yaml"
+# Read a file (q quits)
+less pipelines/exercise1.yaml
+```
+
+**Copy and paste in the terminal:** select text and press **Shift+Ctrl+C** to copy. Press **Shift+Ctrl+V** to paste.
+
+:::
+::::
+
+**Useful keys:** **Tab** completes paths, **↑** recalls commands, **Ctrl+C** stops a terminal command. Paths are case-sensitive.
 
 ## Workshop objectives
 
