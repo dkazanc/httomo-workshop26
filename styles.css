@@ -48,8 +48,7 @@
 /* Tuesday: morning coffee, lunch and afternoon coffee. */
 .reveal #tuesday-3-november-day-2 tbody tr:nth-child(4),
 .reveal #tuesday-3-november-day-2 tbody tr:nth-child(7),
-.reveal #tuesday-3-november-day-2 tbody tr:nth-child(8),
-.reveal #tuesday-3-november-day-2 tbody tr:nth-child(10) {
+.reveal #tuesday-3-november-day-2 tbody tr:nth-child(9) {
   background-color: rgba(255, 255, 255, 0.14);
   color: #ffffff;
   font-weight: 600;

@@ -42,11 +42,10 @@ author:
 | 09:05–09:45 | Tomography beamlines | Beamline staff |
 | 09:45–10:30 | Beamline tours | — |
 | 10:30–11:00 | ☕ Coffee 30-min break | — |
-| 11:00–11:30 | HTTomo web interfaces | Yousef Moazzam |
-| 11:30–12:00 | Output visualisation tools | Benedikt Daurer |
-| 12:00–12:15 | 📸 Group photo | — |
-| 12:15–13:00 | 🥪 Lunch — Atrium | — |
-| 13:00–14:30 | Tutorial III: web interface & output visualisation | Daniil Kazantsev / Yousef Moazzam |
+| 11:00–11:30 | Web-based interfaces for HTTomo  | Yousef Moazzam |
+| 11:30–12:00 | Overview of visualisation tools | Benedikt Daurer |
+| 12:00–13:00 | 🥪 Lunch — Atrium | — |
+| 13:00–14:30 | Tutorial III: web interface & output visualisation | Yousef Moazzam / Daniil Kazantsev |
 | 14:30–15:00 | ☕ Coffee 30-min break | — |
 | 15:00–16:30 | Tutorial IV: Q&A, debugging, intermediates & installation | Daniil Kazantsev / Yousef Moazzam |
 ::: {.footer}
